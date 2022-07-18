@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+    Hi {{user.first_name}}
+
+    Please click on below link to confirm vendor registration.
+    http://{{domain}}{% url 'vendoractivate' uidb64=uid token=token %}
+
+    If you think it's not you, please ignore this email
+
+{% endautoescape %} 

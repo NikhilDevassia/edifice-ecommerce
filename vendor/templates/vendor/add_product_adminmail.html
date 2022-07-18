@@ -1,0 +1,11 @@
+
+{% autoescape off %}
+
+    Vendor {{user.first_name}} add a new product {{product.product_name}}
+
+    Click on below link to view product list.
+    http://{{domain}}{% url 'view_vendor_pending_product' %}
+
+    If you think it's not you, please ignore this email
+
+{% endautoescape %} 

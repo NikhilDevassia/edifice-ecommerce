@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<br>
+<main>
+   <section class="checkout-area pb-85">
+      <div class="container">
+         <form action="{% url 'place_order' %}" method="POST">
+            {% csrf_token %}
+            {{form.errors}}
+            <div class="row">
+               <div class="col-lg-6">
+                  <div class="checkbox-form">
+                     <h3>Billing Details</h3>
+                     <div class="row">
+                        <div class="col-md-12">
+                        </div>
+                        <div class="col-md-6">
+                           <div class="checkout-form-list">
+                              <label>First Name <span class="required">*</span></label>
+                              <input type="text" placeholder="Enter your first" name="first_name">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="checkout-form-list">
+                              <label>Last Name <span class="required">*</span></label>
+                              <input type="text" placeholder="Enter your last name" name="last_name">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="checkout-form-list">
+                              <label>Email<span class="required">*</span></label>
+                              <input type="email" placeholder="Enter your email" name="email">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="checkout-form-list">
+                              <label>Phone no<span class="required">*</span></label>
+                              <input type="text" placeholder="Enter your phone no" name="phone">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="checkout-form-list">
+                              <label>Address 1 <span class="required">*</span></label>
+                              <input type="text" placeholder="Street address" name="address_line_1">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="checkout-form-list">
+                              <label>Address 2 <span class="required">*</span></label>
+                              <input type="text" placeholder="second address" name="address_line_2">
+                           </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                           <div class="checkout-form-list">
+                              <label>City <span class="required">*</span></label>
+                              <input type="text" placeholder="City" name="city">
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="checkout-form-list">
+                              <label>State<span class="required">*</span></label>
+                              <input type="text" placeholder="state" name="state" >
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="checkout-form-list">
+                              <label>Country<span class="required">*</span></label>
+                              <input type="text" placeholder="" name="country">
+                           </div>
+                        </div>
+                        <div class="col-md-12">
+                           <div class="checkout-form-list">
+                              <label>Order note<span class="required">*</span></label>
+                              <input type="text" placeholder="................" name="order_note">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <div class="your-order mb-30 ">
+                     <h3>Your order</h3>
+                     <div class="your-order-table table-responsive">
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th class="product-name">Product</th>
+                                 <th class="product-total">Total</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              {% for cart_item in cart_items %}
+                              <tr class="cart_item">
+                                 <td class="product-name">
+                                    {{cart_item.product.product_name|truncatechars:20}} <strong
+                                       class="product-quantity"> * {{quantity}}</strong>
+                                 </td>
+                                 <td class="product-total">
+                                    <span class="amount">₹{{cart_item.product.price}}</span>
+                                 </td>
+                              </tr>
+                              {% endfor %}
+                           </tbody>
+                           <tfoot>
+                              <tr class="cart-subtotal">
+                                 <th>Cart Subtotal</th>
+                                 <td><span class="amount">₹{{total}}</span></td>
+                              </tr>
+                              <tr class="shipping">
+                                 <th>Shipping</th>
+                                 <td>
+                                    {{delivery_charge}}
+                                 </td>
+                              </tr>
+                              <tr class="order-total">
+                                 <th>Order Total</th>
+                                 <td><strong><span class="amount">₹{{grand_total}}</span></strong>
+                                 </td>
+                              </tr>
+                           </tfoot>
+                        </table>
+                     </div>
+
+                     <div class="payment-method">
+                        <div class="accordion" id="checkoutAccordion">
+                           
+                        </div>
+                        <div class="order-button-payment mt-20">
+                           <button type="submit" class="tp-btn-h1">Place order</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </section>
+</main>
+{% endblock %}

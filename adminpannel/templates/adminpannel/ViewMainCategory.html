@@ -1,0 +1,36 @@
+{% extends 'adminpannel/base.html' %}
+{% block content %}
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Cat image</th>
+                <th>main category name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for main in main_category %}
+              <tr style="height:100px;">
+                <td><img src="{{main.cat_image.url}}" width="80px" alt="main category image"></td>
+                <td>
+                  <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                  <strong>{{main.category_name}}</strong>
+                </td>
+                <td>{{main.description}}</td>
+              </tr>
+              {% endfor %}
+              </form>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock %}

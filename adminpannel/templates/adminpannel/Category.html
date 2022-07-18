@@ -1,0 +1,61 @@
+{% extends 'adminpannel/loginbase.html' %}
+{% block content %}
+{% load static %}
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+      <div class="content-wrapper">
+        <!-- Content -->
+        <form action="{% url 'add_product' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="container-xxl flex-grow-1 container-p-y">
+  
+  
+            <div class="row">
+              <div class="col-md-12">
+  
+                <div class="card mb-4">
+                  <h5 class="card-header">Product Details</h5>
+                  <!-- Account -->
+                  <div class="card-body">
+                    <div class="d-flex align-items-start align-items-sm-center gap-4">
+                      {{form.images}}
+                    </div>
+                  </div>
+                  <hr class="my-0">
+                  <div class="card-body">
+  
+                    <div class="row">
+                      <div class="mb-3 col-md-6">
+                        <label for="state" class="form-label">Main category image</label>
+                        {{form.cat_image}}
+                      </div>
+  
+                      <div class="mb-3 col-md-6">
+                        <label for="state" class="form-label">Main category name</label>
+                        {{form.category_name}}
+                      </div>
+  
+                      <div class="mb-3 col-md-6">
+                        <label for="state" class="form-label">Description</label>
+                        {{form.description}}
+                      </div>
+                    </div>
+                    <div class="class mt-2">
+                    </div>
+                    <div class="mt-2">
+                      <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                      <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                    </div>
+  
+                  </div>
+                </div>
+                <div class="card">
+                </div>
+              </div>
+            </div>
+        </form>
+      </div>
+    </div>
+{% endblock %}
+
+

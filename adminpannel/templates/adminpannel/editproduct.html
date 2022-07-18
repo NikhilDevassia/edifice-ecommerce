@@ -1,0 +1,64 @@
+{% extends 'adminpannel/base.html' %}
+{% block content %}
+<form action="{% url 'edit_product' slug %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="card mb-4">
+          <h5 class="card-header">Product Details</h5>
+          <!-- Account -->
+          <div class="card-body">
+            <div class="d-flex align-items-start align-items-sm-center gap-4">
+              {{form.images}}
+            </div>
+          </div>
+          <hr class="my-0">
+          <div class="card-body">
+            <form id="formAccountSettings" method="POST" onsubmit="return false">
+              <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label for="state" class="form-label">Product name</label>
+                  {{form.product_name}}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  <label for="state" class="form-label">Category</label>
+                  {{form.category}}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  <label for="state" class="form-label">Price</label>
+                  {{form.price}}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  <label for="state" class="form-label">Stock</label>
+                  {{form.stock}}
+                </div>
+
+                <div class="mb-3 col-md-6">
+                  <label for="state" class="form-label">Description</label>
+                  {{form.description}}
+                </div>
+              </div>
+              <div class="class mt-2">
+                <label for="state" class="form-label">Availabe</label>
+                {{form.is_available}}
+              </div>
+              <div class="mt-2">
+                <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card">
+        </div>
+      </div>
+    </div>
+</form>
+</div>
+</div>
+{% endblock %}

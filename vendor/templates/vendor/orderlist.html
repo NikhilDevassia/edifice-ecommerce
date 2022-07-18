@@ -1,0 +1,45 @@
+{% extends 'vendor/base.html' %}
+{% block content %}
+{% load static %}
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Order ID #</th>
+                <th>Billing name</th>
+                <th>Phone number</th>
+                <th>Order tottal</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in order_list %}
+              <tr>
+                <td>
+                  <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                  <strong>{{order.order_number}}</strong>
+                </td>
+                <td>{{order.full_name}}</td>
+                <td>{{order.phone}}</td>
+                <td>₹{{order.order_total}}</td>
+                <td><span class="badge bg-label-primary me-1">{{order.created_at}}</span></td>
+                <td>{{order.address_line_1}}</td>
+                <td>{{order.status}}</td>
+              </tr>
+              {% endfor %}
+              </form>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock %}

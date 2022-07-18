@@ -1,0 +1,42 @@
+{% extends 'vendor/base.html' %}
+{% block content %}
+{% load static %}
+<div class="content-wrapper">
+  <div class="container-xxl flex-grow-1 container-p-y">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive text-nowrap">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                
+                <th>product id</th>
+                <th>Payment id</th>
+                <th>user id</th>
+                <th>Amount paid</th>
+                <th>Amount paid</th>
+                <th>order id</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for sold in soldproduct %}
+              <tr>
+                <td>{{sold.user.username}}</td>
+                <td>{{sold.payment_id}}</td>
+                <td>{{sold.user.id}}</td>
+                <td>{{sold.amount_paid}}</td>
+                <td><span class="badge bg-label-primary me-1">{{sold.}}</span></td>
+                <td>
+                </td>
+              </tr>
+              {% endfor %}
+              </form>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-backdrop fade"></div>
+</div>
+{% endblock %}

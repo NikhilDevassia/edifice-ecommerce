@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<main>
+   <section class="cart-area pt-120 pb-120">
+      <div class="container">
+         <div class="row">
+            {% if not cart_items %}
+            <h2 class="text-center">Your shoping cart is empty</h2>
+            <br>
+            <div class="product__add-cart-s text-center">
+               <button type="button" class="cart-btn">
+                  <a href="{% url 'shop' %}">Continue shopping</a>
+               </button>
+            </div>
+            {% else %}
+            <div class="col-12">
+           
+                  <div class="table-content table-responsive">
+                     <table class="table">
+                        <thead>
+                           <tr>
+                              <th class="product-thumbnail">Images</th>
+                              <th class="cart-product-name">Product</th>
+                              <th class="product-price">Unit Price</th>
+                              <th class="product-quantity">Quantity</th>
+                              <th class="product-subtotal">Total</th>
+                              <th class="product-remove">Remove</th>
+                           </tr>
+                        </thead>
+
+                        {% for cart_item in cart_items %}
+                        <tbody>
+                           <tr>
+                              <td class="product-thumbnail"><a href="{{cart_item.product.get_url}}"><img
+                                       src="{{cart_item.product.images.url}}" alt=""></a></td>
+                              <td class="product-name"><a
+                                    href="{{cart_item.product.get_url}}">{{cart_item.product.product_name|truncatechars:20}}</a>
+                              </td>
+                              <td class="product-price"><span class="amount">₹{{cart_item.product.price}}</span></td>
+                              <td class="product-quantity w-25">
+                                 <div class="row w-100">
+                                    <a class="col-4" href="{% url 'removecart' cart_item.product.id cart_item.id %}"
+                                       class="text-center">-</a>
+                                    <div class="col-4">
+                                       <input type="text" value="{{cart_item.quantity}}"
+                                          class="form-control border-0 text-center">
+                                    </div>
+                                    <a class="col-4" href="{% url 'addcart' cart_item.product.id %}"
+                                       class="text-center">+</a>
+                                 </div>
+                              </td>
+                              <td class="product-subtotal"><span class="amount">₹{{cart_item.sub_total}}</span></td>
+                              <td class="product-remove"><a
+                                    href="{% url 'remove_cart_item' cart_item.product.id cart_item.id  %}"><i
+                                       class="fa fa-times"></i></a></td>
+                           </tr>
+                        </tbody>
+                        {% endfor %}
+
+
+                     </table>
+                  </div>
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="coupon-all">
+                           <form action="{% url 'add_coupon' %}" method="POST">
+                              {% csrf_token %}
+                              <div class="coupon">
+                                 <input id="coupon_code" class="input-text" name="code"
+                                    placeholder="Coupon code" type="text">
+                                 <button class="tp-btn-h1" type="submit">Apply coupon</button>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <br>
+
+                  {% if grand_total  >= 50000 %} 
+                  <div class="row">
+                     <div class="col-12">
+                        <section>
+                              <a class="btn btn-warning" href="{% url 'coupon_page' %}">coupons</a>
+                       </section>
+                     </div>
+                  </div>
+                  {% endif %}
+
+
+                  <div class="row justify-content-end">
+                     <div class="col-md-5">
+                        <div class="cart-page-total">
+                           <h2>Cart totals</h2>
+                           <ul class="mb-20">
+                              <li>Subtotal <span>₹{{total}}</span></li>
+                              <li>Delivery Charge<span>₹{{delivery_charge}}</span></li>
+                              {% comment %} <li>Coupon amount<span>₹{{coupon}}</span></li> {% endcomment %}
+                              <li>Total <span>₹{{grand_total}}</span></li>
+                           </ul>
+                           <a class="tp-btn-h1" href="{% url 'checkout' %}">Proceed to checkout</a>
+                        </div>
+                     </div>
+                  </div>
+
+            </div>
+         </div>
+         {% endif %}
+      </div>
+   </section>
+  <!-- moveing-text-area-end -->
+
+</main>
+{% endblock %}

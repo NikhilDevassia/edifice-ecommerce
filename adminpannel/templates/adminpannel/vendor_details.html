@@ -1,0 +1,60 @@
+{% extends 'adminpannel/base.html' %}
+{% block content %}
+{% load static %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <div class="card">
+    <h5 class="card-header">Table Basic</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Account no</th>
+            <th>Gst No</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        {% for vendor in vendors %}
+        <tbody class="table-border-bottom-0">
+          <tr>
+            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong><a href="{% url 'pending_product_manage' vendor.id %}">{{vendor.email}}</a></strong></td>
+            <td>{{vendor.first_name}} {{vendor.last_name}}</td>
+            <td>{{vendor.account_no}}</td>
+            <td>{{vendor.GST_no}}</td>
+             <!-- category error fix -->
+            {% if vendor.is_active %}
+            <td><span class="badge bg-label-success me-1">Active</span></td>
+            {% else %}
+            <td><span class="badge bg-label-danger me-1">blocked</span></td>
+            {% endif %}
+            <td>
+              <div>
+                {% if vendor.is_active %}
+                <form action="{% url 'block_vendor' vendor.id %}" method="POST">
+                  {% csrf_token %}
+                  <button class="btn btn-danger" type="submit">block vendor</button>
+                </form>
+                {% else %}
+                <form action="{% url 'unblock_vendor' vendor.id %}" method="POST">
+                  {% csrf_token %}
+                  <button class="btn btn-success" type="submit">unblock vendor</button>
+                </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="content-backdrop fade"></div>
+</div>
+</div>
+</div>
+<div class="layout-overlay layout-menu-toggle"></div>
+</div>
+{% endblock %}

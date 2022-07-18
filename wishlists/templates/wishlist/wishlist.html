@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<main>
+    <section class="cart-area pb-120 pt-120">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#">
+                        <div class="table-content table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="product-thumbnail">Images</th>
+                                        <th class="cart-product-name">Product</th>
+                                        <th class="product-price">Unit Price</th>
+                                        <th class="product-quantity">Quantity</th>
+                                        <th class="product-remove">Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for wishlist in wishlist_item %}
+                                    <tr>
+                                        <td class="product-thumbnail"><a href="{{wishlist.product.get_url}}"><img
+                                                    src="{{wishlist.product.images.url}}" alt=""></a></td>
+                                        <td class="product-name"><a
+                                                href="{{wishlist.product.get_url}}">{{wishlist.product.product_name|truncatechars:20}}</a>
+                                        </td>
+                                        <td class="product-price"><span
+                                                class="amount">${{wishlist.product.price}}</span></td>
+                                        <td class="product-quantity">
+                                            <button class="tp-btn-h1" type="submit"><a
+                                                    href="{% url 'addcart' wishlist.product.id %}">Add To Cart</a></button>
+                                        </td>
+                                        <td class="product-remove"><a
+                                                href="{% url 'remove_wishlist' wishlist.product.id %}"><i
+                                                    class="fa fa-times"></i></a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

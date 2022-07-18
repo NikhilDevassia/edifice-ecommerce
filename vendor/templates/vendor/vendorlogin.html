@@ -1,0 +1,61 @@
+{% extends 'vendor/loginbase.html' %}
+{% block content %}
+{% load static %}
+
+  <div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+      <div class="authentication-inner">
+        <!-- Register -->
+        <div class="card">
+          <div class="card-body">
+            <!-- Logo -->
+            <div class="app-brand justify-content-center">
+                <span class="app-brand-text demo text-body fw-bolder">Edifice vendor pannel</span>
+            </div>
+            <!-- /Logo -->
+            <h4 class="mb-2">Welcome to Edifice vendor pannel👋</h4>
+            <form id="formAuthentication" class="mb-3" action="{% url 'vendor_login' %}" method="POST">
+              {% csrf_token %}
+              {% include 'includes/alert.html' %}
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                {{form.email}}
+              </div>
+              <div class="mb-3 form-password-toggle">
+                <div class="d-flex justify-content-between">
+                  <label class="form-label" for="password">Password</label>
+                  <a href="{% url 'vendor_forgotpassword' %}">
+                    <small>Forgot Password?</small>
+                  </a>
+                </div>
+                <div class="input-group input-group-merge">
+                  {{form.password}}
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember-me">
+                  <label class="form-check-label" for="remember-me"> Remember Me </label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+              </div>
+              <div class="mb-3">
+                <label for="form-check-label">Dont have an account?<a href="{% url 'vendor_register' %}">Sign up</a></label>
+              </div>
+            </form>
+          </div>
+        </div>  
+      </div>
+    </div>
+  </div>
+  <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+      });
+    }, 2000);
+  </script>
+  {% endblock %}

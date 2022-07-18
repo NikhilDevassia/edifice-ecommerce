@@ -1,0 +1,19 @@
+
+  <div class="col-md-3 has-mega" style="border-radius: 15px;>
+    <aside>
+      <!--   SIDEBAR   -->
+      <ul class="slider-content side-menu mt-5">
+        <a class="list-group-item product__item{% if '/accounts/' == request.path %}active{% endif %}" href="{% url 'dashboard' %}"> Dashboard </a>
+        <a class="list-group-item product__item{% if '/my_orders/' in request.path %}active{% endif %}" href="{% url 'my_orders' %}"> My Orders </a>
+        <a class="list-group-item product__item{% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}"> Edit Profile </a>
+        <a class="list-group-item product__item{% if '/change_password/' in request.path %}active{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
+      </ul>
+      <br>
+      <a class="cart-btn" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
+      <!--   SIDEBAR .//END   -->
+    </aside>
+  </div>
+
+  {% comment %} <button type="button" class="btn btn-outline-primary btn-floating">
+<a href="{% url 'my_orders' %}">View Orders</a>
+  </button> {% endcomment %}

@@ -1,0 +1,21 @@
+{% extends 'adminpannel/base.html' %}
+{% block content %}
+
+<div class="row mx-3 mt-3">
+    {% for c in coupons %}
+    <div class="col-md-6 col-xl-4">
+        <div class="card bg-warning text-white mb-3">
+            <div class="card-header text-center ">Amount: {{c.amount}}</div>
+            <div class="card-body">
+                <h5 class="card-title text-white text-center">Code: {{c.coupon_code}}</h5>
+                <p class="card-text">Quantity: {{c.quantity}}</p>
+                <p class="card-text">Available: {{c.is_available}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+

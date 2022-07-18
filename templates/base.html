@@ -1,0 +1,93 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+   
+<!-- Mirrored from themepure.net/template/dukamarket/dukamarket/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Feb 2022 17:21:09 GMT -->
+<head>
+    {% load static %}
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>edifice</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- Place favicon.ico in the root directory -->
+      <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.png' %}">
+      <!-- CSS here -->
+      <link rel="stylesheet" href="{% static 'css/preloader.css' %}">
+      <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+      <link rel="stylesheet" href="{% static 'css/meanmenu.css' %}">
+      <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+      <link rel="stylesheet" href="{% static 'css/owl-carousel.css' %}">
+      <link rel="stylesheet" href="{% static 'css/swiper-bundle.css' %}">
+      <link rel="stylesheet" href="{% static 'css/backtotop.css' %}">
+      <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+      <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+      <link rel="stylesheet" href="{% static 'flaticon/flaticon.css' %}">
+      <link rel="stylesheet" href="{% static 'css/font-awesome-pro.css' %}">
+      <link rel="stylesheet" href="{% static 'css/default.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0css/font-awesome.min.css">
+      <script src="https://kit.fontawesome.com/97e70b628d.js" crossorigin="anonymous"></script>
+      
+   </head>
+   <body>
+      <!--[if lte IE 9]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+      <![endif]-->
+
+    <!-- .......................................................... -->
+
+    <!-- back to top start -->
+    <div class="progress-wrap">
+        <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+           <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+   </div>
+     <!-- back to top end -->
+     
+    <!-- header-start -->
+   {% include 'includes/header.html' %}
+   <!-- header-end -->
+
+   <!-- .......................................................... -->
+   <main>
+    {% block content %}
+    {% endblock %}
+   </main>
+    <!-- ................................................................ -->
+
+<!-- footer-start -->
+{% include 'includes/footer.html' %}
+<!-- footer-end -->
+
+  <!-- JS here --> 
+  <script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove(); 
+      });
+    }, 2000);
+  </script>
+  <script src="https://kit.fontawesome.com/97e70b628d.js" crossorigin="anonymous"></script>
+  <script src="{% static 'js/vendor/jquery.js' %}"></script>    
+  <script src="{% static 'js/vendor/waypoints.js' %}"></script>
+  <script src="{% static 'js/bootstrap-bundle.js' %}"></script>
+  <script src="{% static 'js/meanmenu.js' %}"></script>
+  <script src="{% static 'js/swiper-bundle.js' %}"></script>
+  <script src="{% static 'js/tweenmax.js' %}"></script>
+  <script src="{% static 'js/owl-carousel.js' %}"></script>
+  <script src="{% static 'js/magnific-popup.js' %}"></script>
+  <script src="{% static 'js/parallax.js' %}"></script>
+  <script src="{% static 'js/backtotop.js' %}"></script>
+  <script src="{% static 'js/nice-select.js' %}"></script>
+  <script src="{% static 'js/countdown.min.js' %}"></script>
+  <script src="{% static 'js/counterup.js' %}"></script>
+  <script src="{% static 'js/wow.js' %}"></script>
+  <script src="{% static 'js/isotope-pkgd.js' %}"></script>
+  <script src="{% static 'js/imagesloaded-pkgd.js' %}"></script>
+  <script src="{% static 'js/ajax-form.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+<!-- Mirrored from themepure.net/template/dukamarket/dukamarket/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 19 Feb 2022 17:21:38 GMT -->
+</html>

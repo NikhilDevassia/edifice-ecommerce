@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!-- shop-area-start -->
+<div class="shop-area mb-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4">
+
+
+                <div class="product-widget mb-30">
+                    <h5 class="pt-title">Product categories</h5>
+                    <div class="widget-category-list mt-20">
+
+                        <div class="dropdown">
+                        {% for main in main_category %}
+                            <a class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                {{main.category_name}}
+                            </a>
+                            <br>
+                            <br>
+
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                {% for subcat in main.category_set.all %}
+                                    <li><a class="dropdown-item" href="{% url 'category' subcat.slug %}">{{subcat.category_name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% comment %} <div class="product-widget mb-30">
+                    <h5 class="pt-title">Filter By Price</h5>
+                    <div class="price__slider mt-30">
+                        <input type="range" class="multi-range success" style="color:red;" value="{{FilterPrice}}"
+                            min="{{min_price.price__min}}" max="{{max_price.price__max}}" id="rangeInput"
+                            oninput="maxPrice.value=this.value" width="400px;" />
+                        <div>
+                            <form action="" class="s-form mt-20" method="get">
+                                <b>₹</b><input type="number" id="maxPrice" readonly="" name="FilterPrice"
+                                    onkeyup="rangeInput.value=this.value"
+                                    value={{FilterPrice}}{{minMaxPrice.price__min}}>
+                                <button type="submit" id="priceFilterBtn" class="tp-btn-square-lg">Filter</button>
+                            </form>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+                {% comment %} <div class="product-widget mb-30">
+                    <h5 class="pt-title">Choose Rating</h5>
+                    <div class="widget-category-list mt-20">
+                        <form action="#">
+                            <div class="single-widget-rating">
+                                <input type="checkbox" id="star-item-1" name="star-item">
+                                <label for="star-item-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>(54)</span>
+                                </label>
+                            </div>
+                            <div class="single-widget-rating">
+                                <input type="checkbox" id="star-item-2" name="star-item">
+                                <label for="star-item-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <span>(37)</span>
+                                </label>
+                            </div>
+                            <div class="single-widget-rating">
+                                <input type="checkbox" id="star-item-3" name="star-item">
+                                <label for="star-item-3">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <span>(7)</span>
+                                </label>
+                            </div>
+                            <div class="single-widget-rating">
+                                <input type="checkbox" id="star-item-4" name="star-item">
+                                <label for="star-item-4">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <span>(5)</span>
+                                </label>
+                            </div>
+                            <div class="single-widget-rating">
+                                <input type="checkbox" id="star-item-5" name="star-item">
+                                <label for="star-item-5">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <i class="fal fa-star"></i>
+                                    <span>(3)</span>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div> {% endcomment %}
+
+            </div>
+            <div class="col-xl-9 col-lg-8">
+                <div class="product-lists-top">
+                    <div class="product__filter-wrap">
+                        <div class="row align-items-center">
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                <div class="product__filter d-sm-flex align-items-center">
+                                    <div class="product__result pl-60">
+                                        {% comment %} <p>Showing 1-20 of <strong>{{product_count}}</strong> relults</p> {% endcomment %}
+                                        <p><strong>{{product_count}}</strong> relults</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                <div class="product__filter-right d-flex align-items-center justify-content-md-end">
+                                    <div class="product__sorting product__show-no">
+                                        <select>
+                                            <option>10</option>
+                                            <option>20</option>
+                                            <option>30</option>
+                                            <option>40</option>
+                                        </select>
+                                    </div>
+                                    <div class="product__sorting product__show-position ml-20">
+                                        <select>
+                                            <option>Latest</option>
+                                            <option>New</option>
+                                            <option>Up comeing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="productGridTabContent">
+                    <div class="tab-pane fade  show active" id="FourCol" role="tabpanel" aria-labelledby="FourCol-tab">
+                        <div class="tp-wrapper">
+                            {% if products|length < 1 %}
+                            <img src="{% static 'img/logo/product-not-found.png' %}" style="display: block;margin: 0 auto;" alt="not found image">
+                            <h1 style="width:400px;display: block;margin: 0 auto;">Product not found</h1>
+                            {% else %}
+                            <div class="row g-0">
+                                {% for product in products %}
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item product__item-d">
+                                        <div class="product__thumb fix">
+                                            <div class="product-image w-img" style="height: 200px">
+                                                <a href="{{ product.get_url }}">
+                                                    <img src="{{product.images.url}}" alt="product">
+                                                </a>
+                                            </div>
+                                            <div class="product__offer">
+                                                <span class="discount">%{{product.offer}}</span>
+                                            </div>  
+                                            <div class="product-action">
+                                                {% comment %} <a href="{{product.get_url}}" class="icon-box icon-box-1"
+                                                    data-bs-toggle="modal" data-bs-target="#productModalId">
+                                                    <i class="fal fa-eye"></i>
+                                                    <i class="fal fa-eye"></i>
+                                                </a> {% endcomment %}
+                                                {% if user.is_authenticated %}
+                                                <a href="{% url 'add_to_wishlist' product.id %}"
+                                                    class="icon-box icon-box-1">
+                                                    <i class="fa fa-heart"></i>
+                                                    <i class="fa fa-heart"></i>
+                                                </a>
+                                                {% else %}
+                                                <a href="{% url 'login'%}"
+                                                class="icon-box icon-box-1">
+                                                <i class="fa fa-heart"></i>
+                                                <i class="fa fa-heart"></i>
+                                            </a>
+                                                {% endif %}
+                                                {% comment %} <a href="#" class="icon-box icon-box-1">
+                                                    <i class="fal fa-layer-group"></i>
+                                                    <i class="fal fa-layer-group"></i>
+                                                </a> {% endcomment %}
+                                            </div>
+                                        </div>
+                                        <div class="product__content-3">
+                                            <h6><a
+                                                    href="{{product.get_url}}">{{product.product_name|truncatechars:20}}</a>
+                                            </h6>
+                                            <div class="rating-star">
+                                                <span>
+                                                    <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}"
+                                                        aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}"
+                                                        aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}"
+                                                        aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}"
+                                                        aria-hidden="true"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}"
+                                                        aria-hidden="true"></i>
+                                                    <span>{{product.countReview}} reviews</span>
+                                                </span>
+                                            </div>
+                                            <div class="price mb-10">
+                                                <span>₹{{product.price}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="product__add-cart-s text-center">
+                                            {% if product.stock <= 0 %}
+                                            <a href="#" class="cart-btn">Out of stock</a>
+                                            {% else %}
+                                                    {% if in_cart %}
+                                                    <a href="#" class="cart-btn">View cart</a>
+                                                    {% else %}
+                                            <a href="{% url 'addcart' product.id %}" class="cart-btn">Add to cart</a>
+                                            {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!--pagination-->
+                    <div class="tp-pagination text-center">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="basic-pagination pt-30 pb-30">
+                                    {% comment %} pagination {% endcomment %}
+                                    <nav class="mt-4">
+                                        {% if products.has_other_pages %}
+                                        <ul>
+                                            {% if products.has_previous %}
+                                            <li class="page-item"><a class="page-link"
+                                                    href="?page={{products.previous_page_number}}">
+                                                    <</a> </li> {% else %} <li class="page-item disabled"><a
+                                                            class="page-link" href="#">
+                                                            <</a> </li> {% endif %}
+                                                                {% for i in products.paginator.page_range %}
+                                                                {% if products.number == i %} <li
+                                                                class="page-item active"><a class="page-link"
+                                                                    href="#">{{i}}</a></li>
+                                            {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                                            {% endif %}
+                                            {% endfor %}
+
+                                            {% if products.has_next %}
+                                            <li class="page-item"><a class="page-link"
+                                                    href="?page={{products.next_page_number}}">></a></li>
+                                            {% else %}
+                                            <li class="page-item disabled"><a class="page-link" href="#">></a></li>
+                                            {% endif %}
+                                        </ul>
+                                        {% endif %}
+                                    </nav>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+{% endblock %}

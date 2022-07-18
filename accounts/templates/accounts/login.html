@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<main>
+    <!-- page-banner-area-start -->
+    <div class="page-banner-area page-banner-height-2" data-background="{% static '/img/banner/page-banner-4.jpg' %}">   
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="page-banner-content text-center">
+                        <h4 class="breadcrumb-title">My account</h4>
+                        <div class="breadcrumb-two">
+                            <nav>
+                               <nav class="breadcrumb-trail breadcrumbs">
+                                  <ul class="breadcrumb-menu">
+                                     <li class="breadcrumb-trail">
+                                        <a href="{% url 'home' %}"><span>Home</span></a>
+                                     </li>
+                                     <li class="trail-item">
+                                        <span>My account</span>
+                                     </li>
+                                  </ul>
+                               </nav> 
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page-banner-area-end -->
+
+    <!-- account-area-start -->
+    <div class="account-area mt-70 mb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="basic-login mb-50">
+                        <!-- userlogin -->
+                        <h5>Login</h5>
+                        {% include 'includes/alert.html' %}
+                        <form action="{% url 'login' %}" method="POST">
+                            {% csrf_token %}
+                            <label for="name">Enter email address</label>
+                            <input id="name" type="email" placeholder="Enter email address" name="email">
+                            <label for="pass">Password</label>
+                            <input id="pass" type="password" placeholder="Enter password..." name="password">
+                            <div class="login-action mb-10 fix">
+                                <span class="log-rem f-left">
+                                   <input id="remember" type="checkbox">
+                                   <label for="remember">Remember me</label>
+                                </span>
+                                <span class="forgot-login f-right">
+                                   <a href="{% url 'forgotpassword' %}">Lost your password?</a>
+                                </span>
+                            </div>
+                            <button type="submit" class="tp-in-btn w-100">log in</button> 
+                            <p>Already have an account?<span class="forgot-login f-center">
+                                <a href="{% url 'register' %}">Sign up</a>
+                             </span></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
