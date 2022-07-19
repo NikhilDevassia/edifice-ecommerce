@@ -105,7 +105,7 @@ def admin_vendor_request_accept(request,pk):
         user = Account.objects.get(id=pk)
         user.account_verification = True
         user.save()
-        return redirect(admin_vendor_request_view) 
+        return redirect('vendor_request') 
 
 
 #block vendor request
