@@ -200,3 +200,4 @@ class MediaStorage(S3Boto3Storage):
   location = 'media'
   file_overwrite = False
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
