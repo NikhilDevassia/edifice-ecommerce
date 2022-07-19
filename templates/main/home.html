@@ -172,7 +172,7 @@
                         {% for product in products %}
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
-                                <div class="product-image w-img">
+                                <div class="product-image w-img" style="height: 200px">
                                     <a href="{{product.get_url}}">
                                         <img src="{{ product.images.url }}" alt="product">
                                     </a>
@@ -298,7 +298,7 @@
                                     
                                 <div class="product__item swiper-slide">
                                     <div class="product__thumb fix">
-                                        <div class="product-image w-img">
+                                        <div class="product-image w-img" style="height: 200px">
                                             <a href="{{topsell.get_url}}">
                                                 <img src="{{ topsell.images.url }}" alt="product">
                                             </a>
@@ -641,7 +641,7 @@
                     {% for recommendation in recommendations %}
                         <div class="product__item swiper-slide">
                             <div class="product__thumb fix">
-                                <div class="product-image w-img">
+                                <div class="product-image w-img" style="height: 200px">
                                     <a href="{{recommendation.product_id.get_url}}">
                                         <img src="{{ recommendation.product_id.images.url }}" alt="product">
                                     </a>
