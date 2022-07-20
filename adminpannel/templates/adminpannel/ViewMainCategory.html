@@ -16,7 +16,11 @@
             <tbody>
               {% for main in main_category %}
               <tr style="height:100px;">
+                {% if main.cate_image %}
                 <td><img src="{{main.cat_image.url}}" width="80px" alt="main category image"></td>
+                {% else %}
+                <td><img src="" alt="no image"></td>
+                {% endif %}
                 <td>
                   <i class="fab fa-angular fa-lg text-danger me-3"></i>
                   <strong>{{main.category_name}}</strong>
