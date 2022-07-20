@@ -135,6 +135,19 @@
                                 </p>
                                 {% else %}
                                 {% endif %}
+                                <p>
+                                    {% if user.is_authenticated and user.is_admin %}
+                                    <p>
+                                        <a href="{% url 'admn/' %}">Admin pannel</a>
+                                    </p>
+                                    {% endif %}
+
+                                    {% if user.is_authenticated and user.is_admin %}
+                                    <p>
+                                        <a href="{% url 'admin/' %}">Core admin pannel</a>
+                                    </p>
+                                    {% endif %}
+                                </p>
                             </div>
                             <div class="payment-image text-center mb-25">
                                 {% load static %}
