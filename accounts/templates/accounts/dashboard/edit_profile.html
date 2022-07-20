@@ -18,8 +18,12 @@
 						</header>
 						<div class="card-body">
 							<div class="text-right">
+								{% if userprofile.profile_picture %}
 								<img src="{{userprofile.profile_picture.url}}" alt="Profile Picture" width="100"
 									style="border-radius:50px;">
+								{% else %}
+								<img src="" alt="no profile image">
+								{% endif %}
 							</div>
 							<div class="row">
 								<div class="col-md-12">
