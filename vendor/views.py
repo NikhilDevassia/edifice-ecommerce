@@ -248,14 +248,14 @@ def add_product(request):
                 mrp          = mrp,
                 description  = description,
                 images       = images,
-            )   
+                )   
             
             images = request.FILES.getlist('images')
             for image in images:
                 MultipleImages.objects.create(
                     image=image,
                     product = product, #add images using for loop in list
-            )
+                )
 
             #add product confirmation
             current_site = get_current_site(request)
