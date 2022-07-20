@@ -246,7 +246,6 @@ def add_maincategory(request):
             main_category = Main_category.objects.get(category_name = category_name)
             main_category.slug = slug
             main_category.save()
-            return render(request,'add_maincategory')
     context={
         'form':form,
     }    
@@ -265,7 +264,6 @@ def add_category(request):
             category_name = Category_form.objects.get(category_name = category_name)
             category_name.slug = slug
             category_name.save()
-            return render(request,'add_category')
     context={
         'form':form,
     }    
