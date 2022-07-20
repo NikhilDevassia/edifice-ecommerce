@@ -138,13 +138,7 @@
                                 <p>
                                     {% if user.is_authenticated and user.is_admin %}
                                     <p>
-                                        <a href="{% url 'admn/' %}">Admin pannel</a>
-                                    </p>
-                                    {% endif %}
-
-                                    {% if user.is_authenticated and user.is_admin %}
-                                    <p>
-                                        <a href="{% url 'admin/' %}">Core admin pannel</a>
+                                        <a href="{% url 'admin_login' %}">Admin pannel</a>
                                     </p>
                                     {% endif %}
                                 </p>
