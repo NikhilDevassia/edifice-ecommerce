@@ -4,9 +4,9 @@
 {% block content %}
 
 
-<div class="container" style="margin: 0 auto;width: 50%;padding: 50px;background: #f1f1f1;margin-top: 50px;margin-bottom: 50px;">
+<div class="container" style="margin: 0 auto ;padding: 50px;background: #f1f1f1;margin-top: 50px;margin-bottom: 50px;">
     <div class="row invoice row-printable">
-        <div class="col-md-12 col-xl-12 col-lg-12 col-sm-12 col-xs-12">
+        <div class="col-md-12">
             <!-- col-lg-12 start here -->
             <div class="panel panel-default plain" id="dash_0">
                 <!-- Start .panel -->
@@ -15,7 +15,8 @@
                         <!-- Start .row -->
                         <div class="col-lg-6">
                             <!-- col-lg-6 start here -->
-                            <div class="invoice-logo"><img src="{% static 'img/logo/edifice2.png' %}" alt="edifcelogo" style="max-height: 40px;"></div>
+                            <div class="invoice-logo"><img src="{% static 'img/logo/edifice2.png' %}" alt="edifcelogo"
+                                    style="max-height: 40px;"></div>
                         </div>
                         <!-- col-lg-6 end here -->
                         <div class="col-lg-6">
@@ -55,21 +56,22 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          {% for item in order_detail %}
+                                            {% for item in order_detail %}
                                             <tr>
                                                 <td>{{item.product.product_name}}
-                                                  <p class="text-muted small">
-                                          					{% if item.variations.all %}
-                                          						{% for i in item.variations.all %}
-                                          							{{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }} <br>
-                                          						{% endfor %}
-                                          					{% endif %}
-                                          				</p>
+                                                    <p class="text-muted small">
+                                                        {% if item.variations.all %}
+                                                        {% for i in item.variations.all %}
+                                                        {{ i.variation_category | capfirst }} :
+                                                        {{ i.variation_value | capfirst }} <br>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </p>
                                                 </td>
                                                 <td class="text-center">{{item.quantity}}</td>
                                                 <td class="text-center">₹{{item.product_price}} IND</td>
                                             </tr>
-                                          {% endfor %}
+                                            {% endfor %}
                                         </tbody>
                                         <tfoot>
                                             <tr>
@@ -102,7 +104,7 @@
         </div>
         <!-- col-lg-12 end here -->
     </div>
-    </div>
+</div>
 
 
 {% endblock %}
