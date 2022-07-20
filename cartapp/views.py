@@ -13,7 +13,7 @@ def _cart_id(request): #private function
     return cart   
 
 
-@login_required(login_url='login')
+
 def add_cart(request, product_id):  
     current_user = request.user
     product = Product.objects.get(id=product_id) #get product id
