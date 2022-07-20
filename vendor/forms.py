@@ -69,9 +69,9 @@ class add_product_form(forms.ModelForm):
         model = Product
         fields = [ 'images', 'product_name', 'main_category', 'category', 'stock', 'mrp', 'price', 'description','is_available']
         widgets = {
-            "primary_image":forms.ClearableFileInput(attrs={
+            "images":forms.ClearableFileInput(attrs={
                 "class":"form-control",
-                "name":"primary_image",
+                "name":"images",
                 "type":"file"
             })
         }
