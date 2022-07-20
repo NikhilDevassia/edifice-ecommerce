@@ -56,7 +56,7 @@ def add_cart(request, product_id):
 
 
 
-@login_required(login_url='login')
+
 def remove_cart(request, product_id,cart_item_id):
     product = get_object_or_404(Product, id=product_id)
     try:
@@ -76,7 +76,7 @@ def remove_cart(request, product_id,cart_item_id):
     return redirect('cart')        
 
 
-@login_required(login_url='login')
+
 def remove_cart_item(request, product_id, cart_item_id): 
     product = get_object_or_404(Product, id=product_id)
     if request.user.is_authenticated:   
@@ -89,7 +89,7 @@ def remove_cart_item(request, product_id, cart_item_id):
 
 
 
-@login_required(login_url='login')  
+
 def cart(request, total=0, quantity=0, coupon=0, cart_items=None):  
     try:
         delivery_charge = 0
