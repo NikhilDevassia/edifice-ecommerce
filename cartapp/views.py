@@ -14,7 +14,7 @@ def _cart_id(request): #private function
 
 
 
-def add_cart(request, product_id):  
+def add_cart(request, product_id):
     current_user = request.user
     product = Product.objects.get(id=product_id) #get product id
     #if user is authenticated
