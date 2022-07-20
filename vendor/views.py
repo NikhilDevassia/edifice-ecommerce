@@ -250,7 +250,7 @@ def add_product(request):
                 images       = images,
                 )   
             
-            images = request.FILES.getlist('images')
+            images = request.FILES.getlist('multiple_images')
             for image in images:
                 MultipleImages.objects.create(
                     image=image,
