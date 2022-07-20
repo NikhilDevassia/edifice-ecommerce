@@ -246,6 +246,7 @@ def add_maincategory(request):
             main_category = Main_category.objects.get(category_name = category_name)
             main_category.slug = slug
             main_category.save()
+            return render(request,'add_maincategory')
     context={
         'form':form,
     }    
@@ -264,6 +265,7 @@ def add_category(request):
             category_name = Category_form.objects.get(category_name = category_name)
             category_name.slug = slug
             category_name.save()
+            return render(request,'add_category')
     context={
         'form':form,
     }    
@@ -292,6 +294,7 @@ def view_category(request):
 
 
 #coupon
+@login_required(login_url= 'admin_login')
 def add_coupons(request):
     form = Add_coupons_form(request.POST)
     if request.method == 'POST':
@@ -302,7 +305,7 @@ def add_coupons(request):
     }
     return render(request, 'adminpannel/AddCoupon.html',context)
 
-
+@login_required(login_url= 'admin_login')
 def view_coupons(request):
     coupons = Coupon.objects.all()
     context = {
