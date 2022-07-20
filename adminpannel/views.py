@@ -237,7 +237,7 @@ def unlist_product_manage_admin(request,id):
 #add main category
 @login_required(login_url= 'admin_login')
 def add_maincategory(request):
-    form = MainCategory_form(request.POST)
+    form = MainCategory_form(request.POST,request.FILES)
     if request.method == 'POST':
         if form.is_valid():
             category_name = form.cleaned_data['category_name']
@@ -255,7 +255,7 @@ def add_maincategory(request):
 #add category
 @login_required(login_url= 'admin_login')
 def add_category(request):
-    form = Category_form(request.POST)
+    form = Category_form(request.POST,request.FILES)
     if request.method == 'POST':
         if form.is_valid():
             category_name = form.cleaned_data['category_name']

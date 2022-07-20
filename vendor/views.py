@@ -271,7 +271,6 @@ def add_product(request):
 
 
             #send main to admin
-            #how to send multiple email to admin doubt....................................admin pending
             admin_mail = Account.objects.get(is_email = True)
             current_site = get_current_site(request)
             mail_subject = 'New product added'
