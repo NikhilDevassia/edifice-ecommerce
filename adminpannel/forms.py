@@ -58,13 +58,7 @@ class MainCategory_form(forms.ModelForm):
     class Meta:
         model = Main_category
         fields = ['cat_image', 'category_name','description']
-        widgets = {
-            "primary_image":forms.ClearableFileInput(attrs={
-                "class":"form-control",
-                "name":"primary_image",
-                "type":"file"
-            })
-        }   
+  
     def __init__ (self, *args, **kwargs):
         super(MainCategory_form, self).__init__(*args, **kwargs)
         self.fields['category_name'].widget.attrs['placeholder'] = 'Enter main category name'
@@ -82,14 +76,8 @@ class MainCategory_form(forms.ModelForm):
 class Category_form(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['cat_image', 'category_name','description']
-        widgets = {
-            "primary_image":forms.ClearableFileInput(attrs={
-                "class":"form-control",
-                "name":"primary_image",
-                "type":"file"
-            })  
-        }   
+        fields = ['cat_image', 'category_name','description']  
+        
     def __init__ (self, *args, **kwargs):
         super(Category_form, self).__init__(*args, **kwargs)
         self.fields['category_name'].widget.attrs['placeholder'] = 'Enter category name'
