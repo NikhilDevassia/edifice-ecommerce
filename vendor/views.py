@@ -42,7 +42,8 @@ def vendor_home(request):
     profit = 0
     total_price = 0
     total = 0
-    sales = OrderProduct.objects.filter(product__vendor = request.user).count()
+    # sales = OrderProduct.objects.filter(product__vendor = request.user).count()
+    sales = 1
     total_price = OrderProduct.objects.filter(product__vendor = request.user).aggregate(Sum('product_price'))
     total = (total_price["product_price__sum"])
     profit = (total * 0.9)
