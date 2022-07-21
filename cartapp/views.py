@@ -1,3 +1,4 @@
+from traceback import print_tb
 from django.shortcuts import get_object_or_404, redirect, render
 from store.models import Product
 from . models import Cart,CartItem
@@ -13,7 +14,7 @@ def _cart_id(request): #private function
     return cart   
 
 
-
+@login_required(login_url='login')
 def add_cart(request, product_id):  
     current_user = request.user
     product = Product.objects.get(id=product_id) #get product id
@@ -56,7 +57,7 @@ def add_cart(request, product_id):
 
 
 
-
+@login_required(login_url='login')
 def remove_cart(request, product_id,cart_item_id):
     product = get_object_or_404(Product, id=product_id)
     try:
@@ -76,7 +77,7 @@ def remove_cart(request, product_id,cart_item_id):
     return redirect('cart')        
 
 
-
+@login_required(login_url='login')
 def remove_cart_item(request, product_id, cart_item_id): 
     product = get_object_or_404(Product, id=product_id)
     if request.user.is_authenticated:   
@@ -92,6 +93,8 @@ def remove_cart_item(request, product_id, cart_item_id):
 @login_required(login_url='login')  
 def cart(request, total=0, quantity=0, coupon=0, cart_items=None):  
     try:
+        delivery_charge = 0
+        grand_total = 0
         if request.user.is_authenticated:   
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
             if CouponUsers.objects.filter(user=request.user, is_used=False).exists():
@@ -105,17 +108,17 @@ def cart(request, total=0, quantity=0, coupon=0, cart_items=None):
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
         delivery_charge = 1500  if  total<50000 else 0    
-        
+        grand_total = total + delivery_charge
     except ObjectDoesNotExist:
         pass
     context = {
         'total':total,
         'quantity':quantity,
         'cart_items':cart_items, 
-        'grand_total':total - coupon + delivery_charge if total >= 50000 else total + delivery_charge,
+        'grand_total':grand_total - coupon if grand_total >= 50000 else grand_total,
         'delivery_charge':delivery_charge,
         'coupon':coupon,
-    }      
+    }        
     return render(request,'cart/cart.html',context)
 
 
@@ -145,20 +148,21 @@ def add_coupon(request):
 @login_required(login_url='login')
 def checkout(request, total=0, quantity=0, coupon=0, cart_items=None):         
     try:
+        delivery_charge = 0
+        grand_total = 0
         if request.user.is_authenticated:   
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
-        else:
-            cart = Cart.objects.get(cart_id=_cart_id(request))
-            cart_items = CartItem.objects.filter(cart=cart, is_active=True)          
+       
         for cart_item in cart_items:
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
+
         if CouponUsers.objects.filter(user = request.user, is_used = False).exists():
             coupon_user = CouponUsers.objects.get(user=request.user, is_used=False)
             coupon = coupon_user.amount if total >= 50000 else 0
 
         delivery_charge = 1500  if  total<50000 else 0    
-        
+        grand_total = total + delivery_charge
 
     except ObjectDoesNotExist:
         pass
@@ -167,10 +171,11 @@ def checkout(request, total=0, quantity=0, coupon=0, cart_items=None):
         'total':total,
         'quantity':quantity,
         'cart_items':cart_items, 
-        'grand_total':total - coupon + delivery_charge if total >= 50000 else total + delivery_charge,
+        'grand_total':grand_total - coupon if grand_total >= 50000 else grand_total,
         'delivery_charge':delivery_charge,
         'coupon':coupon,
     }        
+    print(grand_total)
     return render(request,'cart/checkout.html',context)
 
     
