@@ -98,7 +98,9 @@
                            <ul class="mb-20">
                               <li>Subtotal <span>₹{{total}}</span></li>
                               <li>Delivery Charge<span>₹{{delivery_charge}}</span></li>
-                              {% comment %} <li>Coupon amount<span>₹{{coupon}}</span></li> {% endcomment %}
+                              {% if coupon %}
+                              <li>Coupon amount<span>₹{{coupon}}</span></li>
+                              {% endif %}
                               <li>Total <span>₹{{grand_total}}</span></li>
                            </ul>
                            <a class="tp-btn-h1" href="{% url 'checkout' %}">Proceed to checkout</a>

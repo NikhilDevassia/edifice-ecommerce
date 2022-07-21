@@ -14,7 +14,7 @@ def _cart_id(request): #private function
 
 
 
-def add_cart(request, product_id):
+def add_cart(request, product_id):  
     current_user = request.user
     product = Product.objects.get(id=product_id) #get product id
     #if user is authenticated
@@ -89,7 +89,7 @@ def remove_cart_item(request, product_id, cart_item_id):
 
 
 
-
+@login_required(login_url='login')  
 def cart(request, total=0, quantity=0, coupon=0, cart_items=None):  
     try:
         delivery_charge = 0
@@ -117,7 +117,7 @@ def cart(request, total=0, quantity=0, coupon=0, cart_items=None):
         'grand_total':grand_total - coupon if grand_total >= 50000 else grand_total,
         'delivery_charge':delivery_charge,
         'coupon':coupon,
-    }        
+    }      
     return render(request,'cart/cart.html',context)
 
 
@@ -172,7 +172,7 @@ def checkout(request, total=0, quantity=0, coupon=0, cart_items=None):
         'quantity':quantity,
         'cart_items':cart_items, 
         'grand_total':grand_total - coupon if grand_total >= 50000 else grand_total,
-        'delivery_charge':grand_total,
+        'delivery_charge':delivery_charge,
         'coupon':coupon,
     }        
     return render(request,'cart/checkout.html',context)
