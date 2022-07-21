@@ -13,7 +13,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Sum
 
 #vendor login
 def vendor_login(request):
