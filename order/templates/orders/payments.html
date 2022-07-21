@@ -94,6 +94,12 @@
 							<dt>Total price:</dt>
 							<dd class="text-right">₹ {{total}}</dd>
 						</dl>
+						{% if coupon %}
+						<dl class="dlist-align">
+							<dt>Coupon:</dt>
+							<dd class="text-right">₹ {{coupon}}</dd>
+						{% endif %}
+						</dl>
 						<dl class="dlist-align">
 							<dt>Delivery Charge:</dt>
 							<dd class="text-right"> ₹ {{delivery_charge}}</dd>

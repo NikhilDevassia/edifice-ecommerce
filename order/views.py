@@ -146,7 +146,8 @@ def place_order(request, total=0, quantity=0,):
                 'total': total,
                 'delivery_charge': delivery_charge,
                 'grand_total': grand_total - coupon if grand_total >= 50000 else grand_total,
-                'payment':payment
+                'payment':payment,
+                'coupon':coupon,
             }
             return render(request, 'orders/payments.html', context)
         else:
