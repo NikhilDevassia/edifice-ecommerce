@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from cartapp.models import CartItem
+from coupon.models import Coupon,CouponUsers
 from .forms import OrderForm
 import datetime
 from .models import Order, Payment, OrderProduct
@@ -83,6 +84,10 @@ def place_order(request, total=0, quantity=0,):
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
+    if CouponUsers.objects.filter(user = request.user, is_used = False).exists():
+        coupon_user = CouponUsers.objects.get(user=request.user, is_used=False)
+        coupon = coupon_user.amount if total >= 50000 else 0
+    
     delivery_charge = 1500  if  total<50000 else 0 
     grand_total = total + delivery_charge
 
@@ -140,7 +145,7 @@ def place_order(request, total=0, quantity=0,):
                 'cart_items': cart_items,
                 'total': total,
                 'delivery_charge': delivery_charge,
-                'grand_total': grand_total,
+                'grand_total': grand_total - coupon if grand_total >= 50000 else grand_total,
                 'payment':payment
             }
             return render(request, 'orders/payments.html', context)
