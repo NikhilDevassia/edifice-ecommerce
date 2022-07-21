@@ -107,14 +107,14 @@ def cart(request, total=0, quantity=0, coupon=0, cart_items=None):
             total += (cart_item.product.price * cart_item.quantity)
             quantity += cart_item.quantity
         delivery_charge = 1500  if  total<50000 else 0    
-        grand_total = total + delivery_charge - coupon if grand_total >= 50000 else grand_total,
+        grand_total = total + delivery_charge
     except ObjectDoesNotExist:
         pass
     context = {
         'total':total,
         'quantity':quantity,
         'cart_items':cart_items, 
-        'grand_total':grand_total,
+        'grand_total':grand_total - coupon if grand_total >= 50000 else grand_total,
         'delivery_charge':delivery_charge,
         'coupon':coupon,
     }        
@@ -162,7 +162,7 @@ def checkout(request, total=0, quantity=0, coupon=0, cart_items=None):
             coupon = coupon_user.amount if grand_total >= 50000 else 0
 
         delivery_charge = 1500  if  total<50000 else 0    
-        grand_total = total + delivery_charge - coupon if grand_total >= 50000 else grand_total,
+        grand_total = total + delivery_charge
 
     except ObjectDoesNotExist:
         pass
@@ -171,7 +171,7 @@ def checkout(request, total=0, quantity=0, coupon=0, cart_items=None):
         'total':total,
         'quantity':quantity,
         'cart_items':cart_items, 
-        'grand_total':grand_total,
+        'grand_total':grand_total - coupon if grand_total >= 50000 else grand_total,
         'delivery_charge':grand_total,
         'coupon':coupon,
     }        
