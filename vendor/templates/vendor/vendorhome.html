@@ -49,7 +49,9 @@
                   </div>
                 </div>
                 <span class="fw-semibold d-block mb-1">Profit</span>
+                {% if profit %}
                 <h3 class="card-title mb-2">₹ {{profit}}</h3>
+                {% endif %}
                 {% comment %} <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> {% endcomment %}
               </div>
             </div>
@@ -73,9 +75,9 @@
                   </div>
                 </div>
                 <span>Sales</span>
-              
+                {% if sales %}
                 <h3 class="card-title text-nowrap mb-1">{{sales}}</h3>
-             
+                {% endif %}
                 {% comment %} <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> {% endcomment %}
               </div>
             </div>
