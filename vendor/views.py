@@ -17,7 +17,7 @@ from django.db.models import Sum
 
 #vendor login
 def vendor_login(request):
-    if request.user.is_authenticated and request.user.is_staff and request.user.is_admin != True:
+    if request.user.is_authenticated and request.user.is_staff and request.user.is_admin == False:
         return redirect('vendor_home')
     if request.method == 'POST':
         email = request.POST['email']

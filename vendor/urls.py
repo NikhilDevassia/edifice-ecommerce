@@ -20,8 +20,8 @@ urlpatterns = [
     path('unlist_product/<int:id>',views.unlist_product, name='unlist_product'),
     path('view_unlisted_product/<int:id>', views.view_unlisted_product, name='view_unlisted_product'),
 
-    path('product_order/', views.canceld_product_order, name='canceld_order'),
-    
+    path('product_order/', views.product_order, name='product_order'),
+    path('canceldproduct_order/', views.canceld_product_order, name='canceld_order'),
     path('soldproduct_list/', views.soldproduct_list, name='soldproduct_list'),
 ]
 

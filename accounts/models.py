@@ -81,6 +81,9 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    def user_profile(self):
+        return UserProfile.objects.get(user=self)
+        
 class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)#one to one unique one profile for one Account
     address_line_1 = models.CharField(blank=True, max_length=100)

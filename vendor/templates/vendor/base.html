@@ -55,7 +55,7 @@
       padding-bottom: 0px !important;
     }
   </style>
-
+  <script src="https://kit.fontawesome.com/97e70b628d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -125,7 +125,7 @@
           <!-- Dashboard -->
           <li class="menu-item ">
             <a href="{% url 'vendor_home' %}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-home-circle"></i>
+              <i class="fa-solid fa-chart-line"></i>
               <div data-i18n="Analytics">Dashboard</div>
             </a>
           </li>
@@ -134,7 +134,7 @@
 
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <i class="fa-brands fa-product-hunt"></i>
               <div data-i18n="Account Settings">Product</div>
             </a>
             <ul class="menu-sub">
@@ -159,7 +159,7 @@
 
           <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-              <i class="menu-icon tf-icons bx bx-dock-top"></i>
+              <i class="fa-solid fa-truck"></i>
               <div data-i18n="Account Settings">Order</div>
             </a>
             <ul class="menu-sub">
@@ -198,7 +198,7 @@
             <!-- Search -->
             <div class="navbar-nav align-items-center">
               <div class="nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
                   aria-label="Search...">
               </div>
@@ -215,7 +215,12 @@
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
-                    <img src="{%static 'assets/img/avatars/1.png' %}" alt="" class="w-px-40 h-auto rounded-circle">
+                    {% if user.user_profile.profile_picture %}
+                    <img src="{{user.user_profile.profile_picture.url}}" alt="profile picture"
+                      class="w-px-40 h-auto rounded-circle">
+                    {% else %}
+                    <img src="" alt="">
+                    {% endif %}
                   </div>  
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -224,8 +229,12 @@
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
-                            <img src="{%static 'assets/img/avatars/1.png' %}" alt="profile picture"
+                            {% if user.user_profile.profile_picture %}
+                            <img src="{{user.user_profile.profile_picture.url}}" alt="profile picture"
                               class="w-px-40 h-auto rounded-circle">
+                            {% else %}
+                            <img src="" alt="">
+                            {% endif %}
                           </div>
                         </div>
                         <div class="flex-grow-1">
