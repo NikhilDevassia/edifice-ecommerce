@@ -237,13 +237,30 @@
             </ul>
           </li>
 
-
-          <!-- <li class="menu-item">
-            <a href="{% url 'add_maincategory' %}" class="menu-link">
-              <i class="menu-icon tf-icons bx bx-home-circle"></i>
-              <div data-i18n="Analytics">Manage Category</div>
+          <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+              <i class="fa-solid fa-truck"></i>
+              <div data-i18n="Account Settings">Order</div>
             </a>
-          </li> -->
+            <ul class="menu-sub">
+              <li class="menu-item">
+                <a href="{% url 'product_order_admin' %}" class="menu-link">
+                  <div data-i18n="Account">Order list</div>
+                </a>                                                                                
+              </li>      
+              <li class="menu-item">
+                <a href="{% url 'canceld_order_admin' %}" class="menu-link">
+                  <div data-i18n="Notifications">Cancelled Order</div>
+                </a>
+              </li>                                                               
+              <li class="menu-item">
+                <a href="{% url 'soldproduct_list_admin' %}" class="menu-link">
+                  <div data-i18n="Notifications">Completed orders</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+
         </ul>
       </aside>
       <!-- / Menu -->
@@ -265,7 +282,7 @@
             <!-- Search -->
             <div class="navbar-nav align-items-center">
               <div class="nav-item d-flex align-items-center">
-                <i class="bx bx-search fs-4 lh-0"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
                   aria-label="Search...">
               </div>
@@ -282,8 +299,12 @@
               <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                   <div class="avatar avatar-online">
-                    <img src="{%static 'assets/img/avatars/1.png' %}" alt="" class="w-px-40 h-auto rounded-circle">
-                  </div>
+                    {% if user.user_profile.profile_picture %}
+                    <img src="{{user.user_profile.profile_picture.url}}" alt="profile picture" class="w-px-40 h-auto rounded-circle">
+                    {% else %}
+                    <img src="" alt="">
+                    {% endif %}
+                  </div> 
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
@@ -291,12 +312,13 @@
                       <div class="d-flex">
                         <div class="flex-shrink-0 me-3">
                           <div class="avatar avatar-online">
-                            <img src="{%static 'assets/img/avatars/1.png' %}" alt=""
+                            {% if user.user_profile.profile_picture %}
+                            <img src="{{user.user_profile.profile_picture.url}}" alt="profile picture"
                               class="w-px-40 h-auto rounded-circle">
+                            {% else %}
+                            <img src="" alt="">
+                            {% endif %}
                           </div>
-                        </div>
-                        <div class="flex-grow-1">
-                          <span class="fw-semibold d-block">{{user.username}}</span>
                         </div>
                       </div>
                     </a>

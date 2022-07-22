@@ -6,7 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.template.defaultfilters import slugify
-
+from order.models import OrderProduct
+from django.db.models import Sum
 #verification email
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -49,7 +50,19 @@ def admin_logout(request):
 #admin pannel
 @login_required(login_url= 'admin_login')
 def admin_home(request):
-    return render(request,'adminpannel/admin_home.html')
+    orders_total = 0
+    gross_sales = 0
+    orders_total = OrderProduct.objects.all().count()
+    gross_sales = OrderProduct.objects.all().aggregate(sum=Sum('payment'))['sum']
+    if gross_sales == None:
+        gross_sales = 0
+    profit = round((int(gross_sales) * 0.85))
+    context = {
+        'sales':orders_total,
+        'profit':profit,
+        'total':gross_sales,
+    }
+    return render(request,'adminpannel/admin_home.html',context)
 
 #user information
 def admin_user_manage(request):
@@ -310,3 +323,31 @@ def view_coupons(request):
         'coupons':coupons,
     }
     return render(request, 'adminpannel/ViewCoupons.html', context)
+
+
+#ordered product
+@login_required(login_url = 'admin_login')
+def product_order(request):
+    order_list = OrderProduct.objects.filter(product__vendor = request.user)
+    context = {
+        'order_list':order_list
+    }
+    return render(request,'adminpannel/orderlist.html', context)
+
+#order canceld
+@login_required(login_url = 'admin_login')
+def canceld_product_order(request):
+    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__is_ordered = False)
+    context = {
+        'order_list':order_list,
+    }
+    return render(request,'adminpannel/Cancelled_order.html',context)
+
+#sold product
+@login_required(login_url = 'admin_login')
+def soldproduct_list(request):
+    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__status = 'New')
+    context = {
+        'order_list':order_list,
+    }
+    return render(request,'adminpannel/soldproduct_list.html',context)

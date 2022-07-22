@@ -365,4 +365,4 @@ def soldproduct_list(request):
     context = {
         'order_list':order_list,
     }
-    return render(request,'vendor/Cancelled_order.html',context)
+    return render(request,'vendor/soldproduct_list.html',context)

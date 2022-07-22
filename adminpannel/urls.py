@@ -34,4 +34,8 @@ urlpatterns = [
 
     path('view_coupons/', views.view_coupons, name = 'view_coupons'),
     path('add_coupons/', views.add_coupons, name = 'add_coupons'),
+
+    path('product_order/', views.product_order, name = 'product_order_admin'),
+    path('cancel_order/', views.canceld_product_order, name = 'canceld_order_admin'),
+    path('soldproduct_list/', views.soldproduct_list, name = 'soldproduct_list_admin'),
 ]
