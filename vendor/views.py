@@ -17,7 +17,7 @@ from django.db.models import Sum
 
 #vendor login
 def vendor_login(request):
-    if request.user.is_authenticated and request.user.is_staff and request.user.is_admin == False:
+    if request.user.is_authenticated and request.user.is_staff and request.user.is_admin != True:
         return redirect('vendor_home')
     if request.method == 'POST':
         email = request.POST['email']
@@ -37,20 +37,24 @@ def vendor_login(request):
     return render(request, 'vendor/vendorlogin.html',context)
 
 
+#vendor home
 @login_required(login_url = 'vendor_login')
 def vendor_home(request):
-    profit = 0
-    total_price = 0
-    total = 0
-    total_price = OrderProduct.objects.filter(product__vendor = request.user).aggregate(Sum('product_price'))
-    total = (total_price["product_price__sum"])
-    profit = (total * 0.9)
+    orders_total = 0
+    gross_sales = 0
+    orders_total = OrderProduct.objects.filter(product__vendor = request.user).count()
+    gross_sales = OrderProduct.objects.all().filter(product__vendor = request.user).aggregate(sum=Sum('payment'))['sum']
+    if gross_sales == None:
+        gross_sales = 0
+
+    profit = round((int(gross_sales) * 0.85))
     context = {
-       
+        'sales':orders_total,
         'profit':profit,
-        'total':total,
+        'total':gross_sales,
     }
-    return render(request,'vendor/vendorhome.html', context)       
+    return render(request,'vendor/vendorhome.html', context)    
+  
 
 
 #vendor logout
@@ -258,14 +262,14 @@ def add_product(request):
                 mrp          = mrp,
                 description  = description,
                 images       = images,
-                )   
+            )   
             
-            images = request.FILES.getlist('multiple_images')
+            images = request.FILES.getlist('images')
             for image in images:
                 MultipleImages.objects.create(
                     image=image,
                     product = product, #add images using for loop in list
-                )
+            )
 
             #add product confirmation
             current_site = get_current_site(request)
@@ -281,6 +285,7 @@ def add_product(request):
 
 
             #send main to admin
+            #how to send multiple email to admin doubt....................................admin pending
             admin_mail = Account.objects.get(is_email = True)
             current_site = get_current_site(request)
             mail_subject = 'New product added'
@@ -336,21 +341,28 @@ def unlist_product(request,id):
 #ordered product
 @login_required(login_url = 'vendor_login')
 def product_order(request):
-    order_list = Order.objects.all()
+    order_list = OrderProduct.objects.filter(product__vendor = request.user)
     context = {
         'order_list':order_list
     }
     return render(request,'vendor/orderlist.html', context)
 
+#order canceld
+@login_required(login_url = 'vendor_login')
+def canceld_product_order(request):
+    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__is_ordered = False)
+    context = {
+        'order_list':order_list,
+    }
+    return render(request,'vendor/Cancelled_order.html',context)
+
+
+
 #sold product
 @login_required(login_url = 'vendor_login')
 def soldproduct_list(request):
-    soldproduct = Payment.objects.all()
+    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__status = 'New')
     context = {
-        'soldproduct':soldproduct,
+        'order_list':order_list,
     }
-    return render(request,'vendor/soldproduct_list.html',context)
-
-
-
-
+    return render(request,'vendor/Cancelled_order.html',context)

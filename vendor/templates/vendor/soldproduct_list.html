@@ -9,25 +9,28 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                
-                <th>product id</th>
-                <th>Payment id</th>
-                <th>user id</th>
-                <th>Amount paid</th>
-                <th>Amount paid</th>
-                <th>order id</th>
+                <th>Order ID #</th>
+                <th>User email</th>
+                <th>Phone number</th>
+                <th>Order tottal</th>
+                <th>Date</th>
+                <th>Address</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {% for sold in soldproduct %}
+              {% for orders in order_list %}
               <tr>
-                <td>{{sold.user.username}}</td>
-                <td>{{sold.payment_id}}</td>
-                <td>{{sold.user.id}}</td>
-                <td>{{sold.amount_paid}}</td>
-                <td><span class="badge bg-label-primary me-1">{{sold.}}</span></td>
                 <td>
+                  <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                  <strong>{{orders.order.order_number}}</strong>
                 </td>
+                <td>{{orders.order.user}}</td>
+                <td>{{orders.order.phone}}</td>
+                <td>₹{{orders.order.order_total}}</td>
+                <td><span class="badge bg-label-primary me-1">{{orders.created_at}}</span></td>
+                <td>{{orders.order.address_line_1}}</td>
+                <td>{{orders.order.status}}</td>
               </tr>
               {% endfor %}
               </form>

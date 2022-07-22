@@ -49,9 +49,7 @@
                   </div>
                 </div>
                 <span class="fw-semibold d-block mb-1">Profit</span>
-                {% if profit %}
                 <h3 class="card-title mb-2">₹ {{profit}}</h3>
-                {% endif %}
                 {% comment %} <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +72.80%</small> {% endcomment %}
               </div>
             </div>
@@ -75,9 +73,9 @@
                   </div>
                 </div>
                 <span>Sales</span>
-                {% if sales %}
+              
                 <h3 class="card-title text-nowrap mb-1">{{sales}}</h3>
-                {% endif %}
+             
                 {% comment %} <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> +28.42%</small> {% endcomment %}
               </div>
             </div>
@@ -689,7 +687,7 @@
                     </div>
                   </div>
                 </div>
-                <span class="d-block mb-1">Payments</span>
+                <span class="d-block mb-1">Gross sale</span>
                 <h3 class="card-title text-nowrap mb-2">₹ {{total}}</h3>
                 {% comment %} <small class="text-danger fw-semibold"><i class="bx bx-down-arrow-alt"></i> -14.82%</small> {% endcomment %}
               </div>
@@ -726,12 +724,12 @@
                   <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                     <div class="card-title">
                       <h5 class="text-nowrap mb-2">Profile Report</h5>
-                      <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                      <span class="badge bg-label-warning rounded-pill">Year 2022</span>
                     </div>
                     <div class="mt-sm-auto">
-                      <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
-                        68.2%</small>
-                      <h3 class="mb-0">$84,686k</h3>
+                      {% comment %} <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
+                        68.2%</small> {% endcomment %}
+                      <h3 class="mb-0">₹ {{total}}</h3>
                     </div>
                   </div>
                   <div id="profileReportChart" style="min-height: 80px;">
@@ -897,7 +895,7 @@
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3" style="position: relative;">
               <div class="d-flex flex-column align-items-center gap-1">
-                <h2 class="mb-2">8,258</h2>
+                <h2 class="mb-2">{{sales}}</h2>
                 <span>Total Orders</span>
               </div>
               <div id="orderStatisticsChart" style="min-height: 137.55px;">
