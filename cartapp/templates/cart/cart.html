@@ -98,7 +98,7 @@
                            <ul class="mb-20">
                               <li>Subtotal <span>₹{{total}}</span></li>
                               <li>Delivery Charge<span>₹{{delivery_charge}}</span></li>
-                              {% if coupon %}
+                              {% if coupon.amount %}
                               <li>Coupon amount<span>₹{{coupon}}</span></li>
                               {% endif %}
                               <li>Total <span>₹{{grand_total}}</span></li>

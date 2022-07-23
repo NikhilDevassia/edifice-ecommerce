@@ -299,16 +299,16 @@
                                 <div class="product__item swiper-slide">
                                     <div class="product__thumb fix">
                                         <div class="product-image w-img" style="height: 200px">
-                                            <a href="{{topsell.get_url}}">
-                                                <img src="{{ topsell.images.url }}" alt="product">
+                                            <a href="{{topsell.product.get_url}}">
+                                                <img src="{{ topsell.product.images.url }}" alt="product">
                                             </a>
                                         </div>
                                         <div class="product__offer">
-                                            <span class="discount">%{{topsell.offer}}</span>
+                                            <span class="discount">%{{topsell.product.offer}}</span>
                                         </div>  
                                         <div class="product-action">
                                             {% if user.is_authenticated %}
-                                            <a href="{% url 'add_to_wishlist' topsell.id %}"
+                                            <a href="{% url 'add_to_wishlist' topsell.product.id %}"
                                                 class="icon-box icon-box-1">
                                                 <i class=" fa fa-heart"></i>
                                                 <i class=" fa fa-heart"></i>
@@ -323,34 +323,34 @@
                                         </div>
                                     </div>
                                     <div class="product__content">
-                                        <h6><a href="{{topsell.get_url}}">{{topsell.product_name|truncatechars:20}}</a></h6>
+                                        <h6><a href="{{topsell.product.get_url}}">{{topsell.product.product_name|truncatechars:20}}</a></h6>
                                         <div class="rating mb-5">
                                             <span>
-                                                <i class="fa fa-star{% if topsell.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}"
+                                                <i class="fa fa-star{% if topsell.product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o {% endif %}"
                                                     aria-hidden="true"></i>
-                                                <i class="fa fa-star{% if topsell.averageReview < 1.5 %}-o{% elif topsell.averageReview >= 1.5 and topsell.averageReview < 2 %}-half-o {% endif %}"
+                                                <i class="fa fa-star{% if topsell.product.averageReview < 1.5 %}-o{% elif topsell.averageReview >= 1.5 and topsell.averageReview < 2 %}-half-o {% endif %}"
                                                     aria-hidden="true"></i>
-                                                <i class="fa fa-star{% if topsell.averageReview < 2.5 %}-o{% elif topsell.averageReview >= 2.5 and topsell.averageReview < 3 %}-half-o {% endif %}"
+                                                <i class="fa fa-star{% if topsell.product.averageReview < 2.5 %}-o{% elif topsell.averageReview >= 2.5 and topsell.averageReview < 3 %}-half-o {% endif %}"
                                                     aria-hidden="true"></i>
-                                                <i class="fa fa-star{% if topsell.averageReview < 3.5 %}-o{% elif topsell.averageReview >= 3.5 and topsell.averageReview < 4 %}-half-o {% endif %}"
+                                                <i class="fa fa-star{% if topsell.product.averageReview < 3.5 %}-o{% elif topsell.averageReview >= 3.5 and topsell.averageReview < 4 %}-half-o {% endif %}"
                                                     aria-hidden="true"></i>
-                                                <i class="fa fa-star{% if topsell.averageReview < 4.5 %}-o{% elif topsell.averageReview >= 4.5 and topsell.averageReview < 5 %}-half-o {% endif %}"
+                                                <i class="fa fa-star{% if topsell.product.averageReview < 4.5 %}-o{% elif topsell.averageReview >= 4.5 and topsell.averageReview < 5 %}-half-o {% endif %}"
                                                     aria-hidden="true"></i>
-                                                <span>{{topsell.countReview}} reviews</span>
+                                                <span>{{topsell.product.countReview}} reviews</span>
                                             </span>
                                         </div>
                                         <div class="price mb-10">
-                                            <span>₹{{topsell.price}}</span>
+                                            <span>₹{{topsell.product.price}}</span>
                                         </div>
                                     </div>
                                     <div class="product__add-cart text-center">
-                                        {% if topsell.stock <= 0 %}
+                                        {% if topsell.product.stock <= 0 %}
                                         <a href="#" class="cart-btn">Out of stock</a>
                                         {% else %}
                                                 {% if in_cart %}
                                                 <a href="#" class="cart-btn">View cart</a>
                                                 {% else %}
-                                        <a href="{% url 'addcart' topsell.id %}" class="cart-btn">Add to cart</a>
+                                        <a href="{% url 'addcart' topsell.product.id %}" class="cart-btn">Add to cart</a>
                                         {% endif %}
                                         {% endif %}
                                     </div>

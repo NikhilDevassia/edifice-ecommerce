@@ -11,10 +11,8 @@ def home(request):
         product_recommendation = ProductRecommendation.objects.filter(user_id=request.user).order_by('-created_at')
         is_rec_av = product_recommendation.exists()
         slid    = slider.objects.all()
-        product = Product.objects.all().order_by('-created_date')
-        top_selling_count = OrderProduct.objects.annotate(num_books=Count('product'))
-        # print(top_selling_count[1].product) #.......................................................................................................
-        top_selling = Product.objects.all()
+        product = Product.objects.all().order_by('-created_date')[:10]
+        top_selling = OrderProduct.objects.all().order_by('-quantity')
         main_category = Main_category.objects.all().order_by('-id') 
 
         context = { 
@@ -28,8 +26,8 @@ def home(request):
         return render(request,'main/home.html', context)
     else:
         slid    = slider.objects.all()
-        product = Product.objects.all().order_by('-created_date')
-        top_selling = Product.objects.all()
+        product = Product.objects.all().order_by('-created_date')[:10]
+        top_selling = OrderProduct.objects.all().order_by('-quantity')
         main_category = Main_category.objects.all().order_by('-id')
 
         context = {

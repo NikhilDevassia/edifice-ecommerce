@@ -84,12 +84,18 @@ def place_order(request, total=0, quantity=0,):
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity)
         quantity += cart_item.quantity
+
     if CouponUsers.objects.filter(user = request.user, is_used = False).exists():
         coupon_user = CouponUsers.objects.get(user=request.user, is_used=False)
         coupon = coupon_user.amount if total >= 50000 else 0
-    
-    delivery_charge = 1500  if  total<50000 else 0 
-    grand_total = total + delivery_charge
+        delivery_charge = 1500  if  total<50000 else 0 
+        grand_total = total - coupon + delivery_charge
+        coupon_user.is_used = True
+        coupon_user.save()
+    else:
+        delivery_charge = 1500  if  total<50000 else 0 
+        grand_total = total + delivery_charge
+
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -121,6 +127,7 @@ def place_order(request, total=0, quantity=0,):
             data.order_number = order_number
             data.save()
 
+
             order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
 
             client = razorpay.Client(auth=(settings.KEY, settings.SECRET)) 
@@ -145,7 +152,7 @@ def place_order(request, total=0, quantity=0,):
                 'cart_items': cart_items,
                 'total': total,
                 'delivery_charge': delivery_charge,
-                'grand_total': grand_total - coupon if grand_total >= 50000 else grand_total,
+                'grand_total': grand_total,
                 'payment':payment,
                 'coupon':coupon,
             }
