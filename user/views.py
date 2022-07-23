@@ -12,7 +12,7 @@ def home(request):
         is_rec_av = product_recommendation.exists()
         slid    = slider.objects.all()
         product = Product.objects.all().order_by('-created_date')[:10]
-        top_selling = OrderProduct.objects.all().order_by('-quantity')
+        top_selling = Product.objects.all().order_by('-price')
         main_category = Main_category.objects.all().order_by('-id') 
 
         context = { 
