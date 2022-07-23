@@ -350,7 +350,7 @@
                                                 {% if in_cart %}
                                                 <a href="#" class="cart-btn">View cart</a>
                                                 {% else %}
-                                        <a href="{% url 'addcart' topsell.product.id %}" class="cart-btn">Add to cart</a>
+                                        <a href="{% url 'addcart' topsell__product.id %}" class="cart-btn">Add to cart</a>
                                         {% endif %}
                                         {% endif %}
                                     </div>
