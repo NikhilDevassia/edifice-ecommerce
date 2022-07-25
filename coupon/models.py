@@ -10,7 +10,7 @@ class Coupon(models.Model):
     amount         = models.IntegerField()
     created        = models.DateTimeField(auto_now_add=True)
 
-    def _str_(self):
+    def __str__ (self):
         return self.coupon_code
 
 
@@ -22,5 +22,5 @@ class CouponUsers(models.Model):
     date_used    = models.DateTimeField(auto_now_add=True)
     amount       = models.IntegerField(null=True)
 
-    def _str_(self): 
+    def __str__(self):
         return self.user.email

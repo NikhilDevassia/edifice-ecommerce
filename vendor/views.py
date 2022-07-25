@@ -242,6 +242,7 @@ def add_product(request):
         if form.is_valid():
             product_name = form.cleaned_data['product_name']
             category     = form.cleaned_data['category']
+            main_category= form.cleaned_data['main_category']
             stock        = form.cleaned_data['stock']
             mrp          = form.cleaned_data['mrp']
             price        = form.cleaned_data['price']
@@ -257,6 +258,7 @@ def add_product(request):
                 slug         = slug,
                 is_available = is_available,
                 category     = category,
+                main_category=main_category,
                 stock        = stock,
                 price        = price,
                 mrp          = mrp,

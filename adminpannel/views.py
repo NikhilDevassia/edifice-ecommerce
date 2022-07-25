@@ -53,14 +53,15 @@ def admin_home(request):
     orders_total = 0
     gross_sales = 0
     orders_total = OrderProduct.objects.all().count()
-    gross_sales = OrderProduct.objects.all().aggregate(sum=Sum('payment'))['sum']
+    gross_sales = OrderProduct.objects.all().aggregate(sum=Sum('payment'))['sum'] 
     if gross_sales == None:
         gross_sales = 0
-    profit = round((int(gross_sales) * 0.85))
+    profit = round(((int(gross_sales) * 0.15))*1000)
+    total = (gross_sales * 1000)
     context = {
         'sales':orders_total,
         'profit':profit,
-        'total':gross_sales,
+        'total':total,
     }
     return render(request,'adminpannel/admin_home.html',context)
 

@@ -48,6 +48,7 @@ def payments(request):
 
         # Reduce the quantity of the sold products
         product = Product.objects.get(id=item.product_id)
+        product.count_sold += item.quantity
         product.stock -= item.quantity
         product.save()
 
@@ -90,12 +91,12 @@ def place_order(request, total=0, quantity=0,):
         coupon = coupon_user.amount if total >= 50000 else 0
         delivery_charge = 1500  if  total<50000 else 0 
         grand_total = total - coupon + delivery_charge
-        coupon_user.is_used = True
+        # coupon_user.is_used = True  
         coupon_user.save()
     else:
         delivery_charge = 1500  if  total<50000 else 0 
         grand_total = total + delivery_charge
-
+        coupon = 0
 
     if request.method == 'POST':
         form = OrderForm(request.POST)

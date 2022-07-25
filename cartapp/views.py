@@ -14,7 +14,7 @@ def _cart_id(request): #private function
     return cart   
 
 
-@login_required(login_url='login')
+
 def add_cart(request, product_id):  
     current_user = request.user
     product = Product.objects.get(id=product_id) #get product id
@@ -57,7 +57,7 @@ def add_cart(request, product_id):
 
 
 
-@login_required(login_url='login')
+
 def remove_cart(request, product_id,cart_item_id):
     product = get_object_or_404(Product, id=product_id)
     try:
@@ -77,7 +77,7 @@ def remove_cart(request, product_id,cart_item_id):
     return redirect('cart')        
 
 
-@login_required(login_url='login')
+
 def remove_cart_item(request, product_id, cart_item_id): 
     product = get_object_or_404(Product, id=product_id)
     if request.user.is_authenticated:   
@@ -90,7 +90,7 @@ def remove_cart_item(request, product_id, cart_item_id):
 
 
 
-@login_required(login_url='login')  
+ 
 def cart(request, total=0, quantity=0, coupon=0, cart_items=None):  
     try:
         delivery_charge = 0
@@ -131,7 +131,7 @@ def add_coupon(request):
             coupon_user = CouponUsers()
             coupon_user.user = request.user
             coupon_user.coupon = coupon_object
-            coupon_user.is_used = False
+            coupon_user.is_used = True
             coupon_user.amount = coupon_object.amount
             coupon_user.save()
 
@@ -161,7 +161,7 @@ def checkout(request, total=0, quantity=0, coupon=0, cart_items=None):
             coupon_user = CouponUsers.objects.get(user=request.user, is_used=False)
             coupon = coupon_user.amount if total >= 50000 else 0
 
-        delivery_charge = 1500  if  total<50000 else 0    
+        delivery_charge = 1500  if  total >= 50000 else 0    
         grand_total = total + delivery_charge
 
     except ObjectDoesNotExist:

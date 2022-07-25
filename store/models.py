@@ -20,6 +20,8 @@ class Product(models.Model):
     modified_date= models.DateTimeField(auto_now=True)
     vendor       = models.ForeignKey(Account, on_delete=models.CASCADE)
     product_permission = models.BooleanField(default=False)
+    count_sold   = models.IntegerField(default=0)
+    
     def __str__ (self):
         return self.product_name
 
