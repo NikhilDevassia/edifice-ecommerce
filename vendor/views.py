@@ -47,7 +47,8 @@ def vendor_home(request):
     main_cat = []
     main_cat_count = []
     orders_total = OrderProduct.objects.filter(product__vendor = request.user).count()
-    gross_sales = OrderProduct.objects.all().filter(product__vendor = request.user).aggregate(sum=Sum('payment'))['sum']
+    # gross_sales = OrderProduct.objects.all().filter(product__vendor = request.user).aggregate(sum=Sum('payment'))['sum']
+    gross_sales = Order.objects.filter(is_ordered=True).aggregate(sum=Sum('order_total'))['sum'] 
     if gross_sales == None:
         gross_sales = 0
 
