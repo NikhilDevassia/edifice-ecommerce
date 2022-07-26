@@ -15,29 +15,49 @@ from order.models import Order, OrderProduct
 
 
 def store(request, category_slug=None):
-    main_category = Main_category.objects.all().order_by('-id')
-    if category_slug != None: 
-        categories = get_object_or_404(Category, slug = category_slug)
-        products = Product.objects.filter(category = categories, is_available=True, product_permission=True)
-        paginators = Paginator(products, 8)
-        page = request.GET.get('page')
-        paged_product = paginators.get_page(page)
-       
-    else:
-        products = Product.objects.all().filter(is_available=True, product_permission=True).order_by('id')
-        paginators = Paginator(products, 8)
-        page = request.GET.get('page')
-        paged_product = paginators.get_page(page)
-        # product_count = product.count()
-
     FilterPrice = request.GET.get('FilterPrice')
     min_price = Product.objects.all().aggregate(Min('price'))
     max_price = Product.objects.all().aggregate(Max('price'))
+    main_category = Main_category.objects.all().order_by('-id')
+
+    if category_slug != None: 
+        categories = get_object_or_404(Category, slug = category_slug)
+        if FilterPrice !=None:
+            products = Product.objects.filter(
+                category = categories, 
+                is_available=True, 
+                product_permission=True,
+                price__lte=FilterPrice,
+                )
+        else:
+            products = Product.objects.filter(
+                category = categories, 
+                is_available=True, 
+                product_permission=True
+                )
+    else:
+        if FilterPrice != None:
+            products = Product.objects.filter(
+                is_available=True, 
+                product_permission=True,
+                price__lte=FilterPrice,
+                )
+        else:
+            products = Product.objects.filter(
+                is_available=True, 
+                product_permission=True
+                )
+
+    paginators = Paginator(products, 8)
+    page = request.GET.get('page')
+    paged_product = paginators.get_page(page)
+    # product_count = product.count()
+
+    
     if FilterPrice:
         Int_FilterPrice = int(FilterPrice)
         products = Product.objects.filter(price__lte = Int_FilterPrice)
     categories = Category.objects.all()    
-    
     context = {
         'main_category':main_category,
         'min_price':min_price,
@@ -98,7 +118,13 @@ def search(request):
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
         if keyword:
-            products = Product.objects.order_by('created_date').filter(Q(description__icontains=keyword) | Q(product_name__icontains=keyword) | Q(price__icontains=keyword) | Q(description__icontains=keyword) ) 
+            products = Product.objects.order_by('created_date').filter(
+                Q(description__icontains=keyword) | 
+                Q(product_name__icontains=keyword) | 
+                Q(price__icontains=keyword) | 
+                Q(main_category__category_name__icontains=keyword)|
+                Q(category__category_name__icontains=keyword)
+            ) 
             product_count = products.count()
     context = {
         'products':products,
