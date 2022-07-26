@@ -88,7 +88,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)#one to one unique one profile for one Account
     address_line_1 = models.CharField(blank=True, max_length=100)
     address_line_2 = models.CharField(blank=True, max_length=100)
-    profile_picture = models.ImageField(blank=True, upload_to='media/userprofile')
+    profile_picture = models.ImageField(blank=True, upload_to='media/userprofile',null=True)
     city = models.CharField(blank=True, max_length=20)
     state = models.CharField(blank=True, max_length=20)
     country = models.CharField(blank=True, max_length=20)

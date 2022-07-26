@@ -1,4 +1,6 @@
 from django.shortcuts import render,redirect
+
+from category.models import Main_category
 from .forms import *
 from accounts .models import Account
 from django.contrib import messages,auth
@@ -42,16 +44,19 @@ def vendor_login(request):
 def vendor_home(request):
     orders_total = 0
     gross_sales = 0
+    
     orders_total = OrderProduct.objects.filter(product__vendor = request.user).count()
     gross_sales = OrderProduct.objects.all().filter(product__vendor = request.user).aggregate(sum=Sum('payment'))['sum']
     if gross_sales == None:
         gross_sales = 0
-
+    
     profit = round((int(gross_sales) * 0.85))
+    main_category = Main_category.objects.all()
     context = {
         'sales':orders_total,
         'profit':profit,
         'total':gross_sales,
+        'main_category':main_category,
     }
     return render(request,'vendor/vendorhome.html', context)    
   
@@ -349,6 +354,14 @@ def product_order(request):
     }
     return render(request,'vendor/orderlist.html', context)
 
+@login_required(login_url = 'admin_login')
+def product_order(request):
+    order_list = Order.objects.filter(is_ordered = True, status = 'New')
+    context = {
+        'order_list':order_list
+    }
+    return render(request,'adminpannel/orderlist.html', context)
+
 #order canceld
 @login_required(login_url = 'vendor_login')
 def canceld_product_order(request):
@@ -368,3 +381,53 @@ def soldproduct_list(request):
         'order_list':order_list,
     }
     return render(request,'vendor/soldproduct_list.html',context)
+
+
+
+#ordered product
+
+
+#accepted orders
+@login_required(login_url = 'admin_login')
+def accepted_order(request):
+    order_list = Order.objects.filter(is_ordered = True, status = 'Accepted')
+    context = {
+        'order_list':order_list
+    }
+    return render(request,'adminpannel/AcceptedOrders.html', context)
+
+#order canceld
+@login_required(login_url = 'admin_login')  
+def canceld_product_order(request):
+    order_list = Order.objects.filter(is_ordered = False)
+    context = {
+        'order_list':order_list,
+    }
+    return render(request,'adminpannel/Cancelled_order.html',context)
+
+#sold product
+@login_required(login_url = 'admin_login')
+def soldproduct_list(request):
+    order_list = OrderProduct.objects.filter(ordered=True)
+    context = {
+        'order_list':order_list,
+    }
+    return render(request,'adminpannel/soldproduct_list.html',context)
+
+#order confirm
+@login_required(login_url= 'admin_login')
+def order_confirm(request,id):
+    if request.method == 'POST':
+        order_status = Order.objects.get(id=id)
+        order_status.status = 'Accepted'
+        order_status.save()
+        return redirect('product_order_admin')   
+
+#order confirm
+@login_required(login_url= 'admin_login')
+def order_completed(request,id):
+    if request.method == 'POST':
+        order_status = Order.objects.get(id=id)
+        order_status.status = 'Completed'
+        order_status.save()
+        return redirect('accepted_order_admin')   

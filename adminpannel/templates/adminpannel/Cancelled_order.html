@@ -15,7 +15,7 @@
                 <th>Order tottal</th>
                 <th>Date</th>
                 <th>Address</th>
-                <th>Status</th>
+                {% comment %} <th>Status</th> {% endcomment %}
               </tr>
             </thead>
             <tbody>
@@ -25,12 +25,12 @@
                   <i class="fab fa-angular fa-lg text-danger me-3"></i>
                   <strong>{{orders.order.order_number}}</strong>
                 </td>
-                <td>{{orders.order.user}}</td>
-                <td>{{orders.order.phone}}</td>
-                <td>₹{{orders.order.order_total}}</td>
+                <td>{{orders.user.username}}</td>
+                <td>{{orders.user.phone_number}}</td>
+                <td>₹{{orders.order_total}}</td>
                 <td><span class="badge bg-label-primary me-1">{{orders.created_at}}</span></td>
-                <td>{{orders.order.address_line_1}}</td>
-                <td>{{orders.order.status}}</td>
+                <td>{{orders.address_line_1}}</td>
+                {% comment %} <td>{{orders.status}}</td> {% endcomment %}
               </tr>
               {% endfor %}
               </form>

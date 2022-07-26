@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from cartapp.models import CartItem
+from category.models import Main_category
 from coupon.models import Coupon,CouponUsers
 from .forms import OrderForm
 import datetime
@@ -15,7 +16,6 @@ import razorpay
 def payments(request):
     body = json.loads(request.body)
     order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['order_id'])
-
     # Store transaction details inside Payment model
     payment = Payment(
         user = request.user,
@@ -50,8 +50,14 @@ def payments(request):
         product = Product.objects.get(id=item.product_id)
         product.count_sold += item.quantity
         product.stock -= item.quantity
+        product.main_category.count_sold += item.quantity
+        cat = Main_category.objects.get(id = product.main_category.id)
+        cat.count_sold += item.quantity
+        cat.save()
         product.save()
 
+       
+    
     # Clear cart
     CartItem.objects.filter(user=request.user).delete()
 

@@ -53,7 +53,7 @@ def add_cart(request, product_id):
                 cart = cart,
             )    
             cart_item.save()
-
+            
         return redirect('cart')
 
 
@@ -123,7 +123,7 @@ def cart(request, total=0, quantity=0, coupon=0, cart_items=None):
     return render(request,'cart/cart.html',context)
 
 
-
+@login_required(login_url='login') 
 def add_coupon(request):
     if request.method == 'POST':
         code = request.POST['code']

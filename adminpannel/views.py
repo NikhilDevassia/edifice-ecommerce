@@ -1,12 +1,15 @@
+from cProfile import label
+from hashlib import new
 from django.shortcuts import redirect, render
 from django.contrib import auth
 from accounts.models import Account
+from category.models import Main_category
 from store.models import Product
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from django.template.defaultfilters import slugify
-from order.models import OrderProduct
+from order.models import Order, OrderProduct
 from django.db.models import Sum
 #verification email
 from django.contrib.sites.shortcuts import get_current_site
@@ -52,20 +55,45 @@ def admin_logout(request):
 def admin_home(request):
     orders_total = 0
     gross_sales = 0
+    labels = []
+    data = []
+    maincat_name = []
+    maincat_sold = []
+
+    sales = Product.objects.all().order_by('-count_sold')
+    for sale in sales:
+        labels.append(sale.product_name)
+        data.append(sale.count_sold)
+
+    main_category = Main_category.objects.all()
+    for main in main_category:
+        maincat_name.append(main.category_name)
+        maincat_sold.append(main.count_sold)
+
     orders_total = OrderProduct.objects.all().count()
-    gross_sales = OrderProduct.objects.all().aggregate(sum=Sum('payment'))['sum'] 
+    gross_sales = Order.objects.filter(is_ordered=True).aggregate(sum=Sum('order_total'))['sum'] 
     if gross_sales == None:
         gross_sales = 0
-    profit = round(((int(gross_sales) * 0.15))*1000)
-    total = (gross_sales * 1000)
+    profit = round(((int(gross_sales) * 0.15)))
+    total = (gross_sales)    
+
+
     context = {
+        'main_category':main_category,
         'sales':orders_total,
         'profit':profit,
         'total':total,
+        'labels':labels,
+        'data':data,
+
+
+        'maincat_name':maincat_name,
+        'maincat_sold':maincat_sold,
     }
     return render(request,'adminpannel/admin_home.html',context)
 
 #user information
+@login_required(login_url= 'admin_login')
 def admin_user_manage(request):
     account = Account.objects.filter(is_admin=False,is_staff=False)
     context = {
@@ -329,16 +357,25 @@ def view_coupons(request):
 #ordered product
 @login_required(login_url = 'admin_login')
 def product_order(request):
-    order_list = OrderProduct.objects.filter(product__vendor = request.user)
+    order_list = Order.objects.filter(is_ordered = True, status = 'New')
     context = {
         'order_list':order_list
     }
     return render(request,'adminpannel/orderlist.html', context)
 
-#order canceld
+#accepted orders
 @login_required(login_url = 'admin_login')
+def accepted_order(request):
+    order_list = Order.objects.filter(is_ordered = True, status = 'Accepted')
+    context = {
+        'order_list':order_list
+    }
+    return render(request,'adminpannel/AcceptedOrders.html', context)
+
+#order canceld
+@login_required(login_url = 'admin_login')  
 def canceld_product_order(request):
-    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__is_ordered = False)
+    order_list = Order.objects.filter(is_ordered = False)
     context = {
         'order_list':order_list,
     }
@@ -347,8 +384,28 @@ def canceld_product_order(request):
 #sold product
 @login_required(login_url = 'admin_login')
 def soldproduct_list(request):
-    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__status = 'New')
+    order_list = OrderProduct.objects.filter(ordered=True)
     context = {
         'order_list':order_list,
     }
     return render(request,'adminpannel/soldproduct_list.html',context)
+
+#order confirm
+@login_required(login_url= 'admin_login')
+def order_confirm(request,id):
+    if request.method == 'POST':
+        order_status = Order.objects.get(id=id)
+        order_status.status = 'Accepted'
+        order_status.save()
+        return redirect('product_order_admin')   
+
+#order confirm
+@login_required(login_url= 'admin_login')
+def order_completed(request,id):
+    if request.method == 'POST':
+        order_status = Order.objects.get(id=id)
+        order_status.status = 'Completed'
+        order_status.save()
+        return redirect('accepted_order_admin')   
+
+

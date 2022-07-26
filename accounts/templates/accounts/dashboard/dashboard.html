@@ -12,8 +12,12 @@
 					<div class="card" style="border-radius: 15px;">
 						<div class="card-body text-center">
 							<div class="mt-3 mb-4">
-								<img src="{{userprofile.profile_picture.url}}" class="rounded-circle img-fluid"
-									style="width: 100px;" />
+								{% if userprofile.profile_picture %}
+								<img src="{{userprofile.profile_picture.url}}" alt="Profile Picture" width="100"
+									style="border-radius:50px;">
+								{% else %}
+								<img src="" alt="no profile image">
+								{% endif %}
 							</div>
 							<h4 class="mb-2">{{user.full_name}}</h4>
 							<div class="row pt-1">

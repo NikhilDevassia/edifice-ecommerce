@@ -36,6 +36,10 @@ urlpatterns = [
     path('add_coupons/', views.add_coupons, name = 'add_coupons'),
 
     path('product_order/', views.product_order, name = 'product_order_admin'),
+    path('accepted_order/', views.accepted_order, name = 'accepted_order_admin'),
     path('cancel_order/', views.canceld_product_order, name = 'canceld_order_admin'),
     path('soldproduct_list/', views.soldproduct_list, name = 'soldproduct_list_admin'),
+
+    path('order_confirm/<int:id>', views.order_confirm, name ='order_confirm_admin'),
+    path('order_completed/<int:id>', views.order_completed, name ='order_completed_admin'),
 ]
