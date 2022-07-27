@@ -31,7 +31,7 @@
                 <td><span class="badge bg-label-primary me-1">{{orders.created_at}}</span></td>
                 <td>{{orders.address_line_1}}</td>
                 <td>
-                  <form action="{% url 'order_confirm' orders.id %}" method="POST">
+                  <form action="{% url 'order_confirm_admin' orders.id %}" method="POST">
                     {% csrf_token %}
                     <button class="btn btn-success" type="submit">Accept</button>
                   </form>

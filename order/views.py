@@ -44,6 +44,7 @@ def payments(request):
         orderproduct.quantity = item.quantity
         orderproduct.product_price = item.product.price
         orderproduct.ordered = True
+        orderproduct.order_sum = (item.product.price * item.quantity) 
         orderproduct.save()
 
         # Reduce the quantity of the sold products

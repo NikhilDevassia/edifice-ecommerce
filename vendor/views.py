@@ -15,7 +15,9 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+from django.db.models import Sum,Count
+from django.db.models.functions import TruncMonth,TruncMinute,TruncDay
+import datetime
 
 #vendor login
 def vendor_login(request):
@@ -42,21 +44,32 @@ def vendor_login(request):
 #vendor home
 @login_required(login_url = 'vendor_login')
 def vendor_home(request):
-    orders_total = 0
-    gross_sales = 0
     main_cat = []
     main_cat_count = []
+    chart_year = datetime.date.today().year
+    chart_month = datetime.date.today().month
     orders_total = OrderProduct.objects.filter(product__vendor = request.user).count()
-    # gross_sales = OrderProduct.objects.all().filter(product__vendor = request.user).aggregate(sum=Sum('payment'))['sum']
-    gross_sales = Order.objects.filter(is_ordered=True).aggregate(sum=Sum('order_total'))['sum'] 
+    gross_sales = OrderProduct.objects.filter(product__vendor = request.user).aggregate(sum=Sum('order_sum'))['sum']
     if gross_sales == None:
         gross_sales = 0
-
     profit = round((int(gross_sales) * 0.85))
+
     main_category = Main_category.objects.all()
     for main in main_category:
         main_cat.append(main.id)
         main_cat_count.append(main.count_sold)
+
+    #getting daily revenue
+    daily_revenue = Order.objects.filter(                     
+    created_at__year=chart_year,created_at__month=chart_month
+    ).order_by('created_at').annotate(day=TruncMinute('created_at')).values('day').annotate(sum=Sum('order_total')).values('day','sum')
+
+    day=[]
+    revenue=[]
+    for i in daily_revenue:
+        day.append(i['day'].minute)
+        revenue.append(int(i['sum']))
+    
 
     context = {
         'sales':orders_total,
@@ -65,6 +78,8 @@ def vendor_home(request):
         'main_category':main_category,
         'main_cat':main_cat,
         'main_cat_count':main_cat_count,
+        'day':day,
+        'revenue':revenue,
     }
     return render(request,'vendor/vendorhome.html', context)    
   
@@ -356,7 +371,7 @@ def unlist_product(request,id):
 #ordered product
 @login_required(login_url = 'vendor_login')
 def product_order(request):
-    order_list = OrderProduct.objects.filter(product__vendor = request.user)
+    order_list = OrderProduct.objects.filter(product__vendor = request.user, order__status = 'Accepted')
     context = {
         'order_list':order_list
     }
@@ -378,7 +393,7 @@ def canceld_product_order(request):
 #sold product
 @login_required(login_url = 'vendor_login')
 def soldproduct_list(request):
-    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__status = 'New')
+    order_list = OrderProduct.objects.filter(product__vendor = request.user,order__status = 'Completed')
     context = {
         'order_list':order_list,
     }

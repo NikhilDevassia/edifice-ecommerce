@@ -34,7 +34,7 @@
                 <td>
                   <form action="{% url 'order_completed_admin' orders.id %}" method="POST">
                     {% csrf_token %}
-                    <button class="btn btn-success" type="submit">Accept</button>
+                    <button class="btn btn-success" type="submit">Completed</button>
                   </form>
                 </td>
               </tr>

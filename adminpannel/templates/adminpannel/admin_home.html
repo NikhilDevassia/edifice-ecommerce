@@ -141,12 +141,12 @@
                   <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                     <div class="card-title">
                       <h5 class="text-nowrap mb-2">Profile Report</h5>
-                      <span class="badge bg-label-warning rounded-pill">Year 2021</span>
+                      <span class="badge bg-label-warning rounded-pill">Year 2022</span>
                     </div>
                     <div class="mt-sm-auto">
                       {% comment %} <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
                         68.2%</small> {% endcomment %}
-                      <h3 class="mb-0">$84,686k</h3>
+                      <h3 class="mb-0">₹{{total}}</h3>
                     </div>
                   </div>
                   <div id="profileReportChart" style="min-height: 80px;">
@@ -852,14 +852,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-  ];
+  const labels = {{day}}
 
   const data = {
     labels: labels,
@@ -867,7 +860,7 @@
       label: 'My First dataset',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: {{data}},
+      data: {{revenue}},
     }]
   };
 

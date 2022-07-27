@@ -169,11 +169,11 @@
                   <div data-i18n="Account">View product</div>
                 </a>
               </li>
-              <li class="menu-item">
+              {% comment %} <li class="menu-item">
                 <a href="{% url 'add_product' %}" class="menu-link">
                   <div data-i18n="Notifications">Add product</div>
                 </a>
-              </li>
+              </li> {% endcomment %}
               <li class="menu-item">
                 <a href="{% url 'view_vendor_pending_product' %}" class="menu-link">
                   <div data-i18n="Notifications">Product request</div>

@@ -15,7 +15,9 @@ from django.db.models import Sum
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-
+from django.db.models import Sum,Count
+from django.db.models.functions import TruncMonth,TruncMinute,TruncDay
+import datetime
 
 
 
@@ -55,15 +57,13 @@ def admin_logout(request):
 def admin_home(request):
     orders_total = 0
     gross_sales = 0
-    labels = []
-    data = []
     maincat_name = []
     maincat_sold = []
-
+    chart_year = datetime.date.today().year
+    chart_month = datetime.date.today().month
+    orders_total = OrderProduct.objects.filter(product__vendor = request.user).count()
     sales = Product.objects.all().order_by('-count_sold')
-    for sale in sales:
-        labels.append(sale.product_name)
-        data.append(sale.count_sold)
+
 
     main_category = Main_category.objects.all()
     for main in main_category:
@@ -77,16 +77,25 @@ def admin_home(request):
     profit = round(((int(gross_sales) * 0.15)))
     total = (gross_sales)    
 
+    #getting daily revenue
+    daily_revenue = Order.objects.filter(                     
+    created_at__year=chart_year,created_at__month=chart_month
+    ).order_by('created_at').annotate(day=TruncMinute('created_at')).values('day').annotate(sum=Sum('order_total')).values('day','sum')
+
+    day=[]
+    revenue=[]
+    for i in daily_revenue:
+        day.append(i['day'].minute)
+        revenue.append(int(i['sum']))
+
 
     context = {
         'main_category':main_category,
         'sales':orders_total,
         'profit':profit,
         'total':total,
-        'labels':labels,
-        'data':data,
-
-
+        'day':day,
+        'revenue':revenue,
         'maincat_name':maincat_name,
         'maincat_sold':maincat_sold,
     }
@@ -384,7 +393,7 @@ def canceld_product_order(request):
 #sold product
 @login_required(login_url = 'admin_login')
 def soldproduct_list(request):
-    order_list = OrderProduct.objects.filter(ordered=True)
+    order_list = OrderProduct.objects.filter(ordered=True, order__status = 'Completed')
     context = {
         'order_list':order_list,
     }
